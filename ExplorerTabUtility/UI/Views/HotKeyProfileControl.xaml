@@ -47,11 +47,11 @@
                          ToolTip="Keyboard or mouse keys to listen for. Click to record a new key combination." />
 
                 <!-- Scope -->
-                <ComboBox x:Name="CbScope" Grid.Column="5" Style="{StaticResource CustomComboBoxStyle}" DisplayMemberPath="Display"
+                <ComboBox x:Name="CbScope" Grid.Column="5" Style="{StaticResource CustomComboBoxStyle}" SelectedValuePath="Value" DisplayMemberPath="Display"
                           ToolTip="Scope of the hotkeys: Global (anywhere) or only when File Explorer is focused" />
 
                 <!-- Action -->
-                <ComboBox x:Name="CbAction" Grid.Column="6" Style="{StaticResource CustomComboBoxStyle}" Width="150" DisplayMemberPath="Display"
+                <ComboBox x:Name="CbAction" Grid.Column="6" Style="{StaticResource CustomComboBoxStyle}" Width="150" SelectedValuePath="Value" DisplayMemberPath="Display"
                           ToolTip="Action to perform when the hotkeys are pressed" />
 
                 <!-- Expander button -->
