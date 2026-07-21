@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 using ExplorerTabUtility.Models;
 using ExplorerTabUtility.Helpers;
 using H.Hooks;
@@ -38,9 +40,9 @@ public partial class HotKeyProfileControl : UserControl
         return attr is { Length: > 0 } ? ((System.ComponentModel.DescriptionAttribute)attr[0]).Description : value.ToString();
     }
 
-    private static object[] ToDisplayItems(Array values)
+    private static KeyValuePair<string, Enum>[] ToDisplayItems(Array values)
     {
-        return values.Cast<Enum>().Select(v => new { Value = v, Display = GetEnumDisplay(v) }).ToArray();
+        return values.Cast<Enum>().Select(v => new KeyValuePair<string, Enum>(GetEnumDisplay(v), v)).ToArray();
     }
 
 
