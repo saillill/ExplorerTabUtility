@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using System.Threading;
 using System.Windows.Controls;
@@ -22,6 +23,8 @@ public partial class App : Application
             SetupTooltipBehavior();
 
             ThemeManager.Initialize();
+            Application.Current.Resources.MergedDictionaries.Add(
+                new System.Windows.ResourceDictionary { Source = new Uri($"pack://application:,,,/ExplorerTabUtility;component/UI/Themes/{ThemeManager.GetColorsFile()}") });
             _ = new MainWindow();
             return;
         }

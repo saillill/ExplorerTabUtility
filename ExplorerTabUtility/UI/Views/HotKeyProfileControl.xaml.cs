@@ -40,9 +40,9 @@ public partial class HotKeyProfileControl : UserControl
         return attr is { Length: > 0 } ? ((System.ComponentModel.DescriptionAttribute)attr[0]).Description : value.ToString();
     }
 
-    private static KeyValuePair<string, Enum>[] ToDisplayItems(Array values)
+    private static DisplayItem<Enum>[] ToDisplayItems(Array values)
     {
-        return values.Cast<Enum>().Select(v => new KeyValuePair<string, Enum>(GetEnumDisplay(v), v)).ToArray();
+        return values.Cast<Enum>().Select(v => new DisplayItem<Enum>(GetEnumDisplay(v), v)).ToArray();
     }
 
 

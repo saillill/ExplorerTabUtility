@@ -47,12 +47,22 @@
                          ToolTip="Keyboard or mouse keys to listen for. Click to record a new key combination." />
 
                 <!-- Scope -->
-                <ComboBox x:Name="CbScope" Grid.Column="5" Style="{StaticResource CustomComboBoxStyle}" DisplayMemberPath="Key" SelectedValuePath="Value"
-                          ToolTip="Scope of the hotkeys: Global (anywhere) or only when File Explorer is focused" />
+                <ComboBox x:Name="CbScope" Grid.Column="5" Style="{StaticResource CustomComboBoxStyle}" SelectedValuePath="Value">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Display}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
                 <!-- Action -->
-                <ComboBox x:Name="CbAction" Grid.Column="6" Style="{StaticResource CustomComboBoxStyle}" Width="150" DisplayMemberPath="Key" SelectedValuePath="Value"
-                          ToolTip="Action to perform when the hotkeys are pressed" />
+                <ComboBox x:Name="CbAction" Grid.Column="6" Style="{StaticResource CustomComboBoxStyle}" Width="150" SelectedValuePath="Value">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Display}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
 
                 <!-- Expander button -->
                 <ToggleButton x:Name="ExpanderToggle" Grid.Column="7" Margin="4, 0" Style="{StaticResource ToggleButtonArrowStyle}"

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows;
 using Microsoft.Win32;
 
@@ -16,8 +17,12 @@ public static class ThemeManager
         get => (AppTheme)(SettingsManager.ThemeMode);
         set
         {
-            SettingsManager.ThemeMode = (int)value;
-            ApplyTheme(value);
+            if ((int)value != SettingsManager.ThemeMode)
+            {
+                SettingsManager.ThemeMode = (int)value;
+                // Need restart: StaticResource bindings don't update dynamically
+                Restart();
+            }
         }
     }
 
@@ -26,23 +31,19 @@ public static class ThemeManager
         SystemEvents.UserPreferenceChanged += (s, e) =>
         {
             if (e.Category == UserPreferenceCategory.General && CurrentTheme == AppTheme.System)
-                ApplyTheme(AppTheme.System);
+                Restart();
         };
-        ApplyTheme(CurrentTheme);
     }
 
-    public static void ApplyTheme(AppTheme mode)
+    public static string GetColorsFile()
     {
-        bool useDark;
-        if (mode == AppTheme.System)
+        bool useDark = CurrentTheme switch
         {
-            useDark = !IsSystemLightTheme();
-        }
-        else
-        {
-            useDark = mode == AppTheme.Dark;
-        }
-        ApplyColorTheme(useDark ? "Colors.Dark.xaml" : "Colors.Light.xaml");
+            AppTheme.Light => false,
+            AppTheme.Dark => true,
+            _ => !IsSystemLightTheme()
+        };
+        return useDark ? "Colors.Dark.xaml" : "Colors.Light.xaml";
     }
 
     private static bool IsSystemLightTheme()
@@ -50,28 +51,19 @@ public static class ThemeManager
         try
         {
             using var key = Registry.CurrentUser.OpenSubKey(ThemeKey);
-            var value = key?.GetValue(AppsUseLightTheme);
-            return value is not 0;
+            return key?.GetValue(AppsUseLightTheme) is not 0;
         }
         catch { return true; }
     }
 
-    private static void ApplyColorTheme(string colorsFile)
+    public static void Restart()
     {
-        var app = Application.Current;
-        if (app == null) return;
-
-        var dict = app.Resources.MergedDictionaries;
-        // Remove existing Colors dictionary
-        for (int i = dict.Count - 1; i >= 0; i--)
+        SettingsManager.ForceSave();
+        var exe = Process.GetCurrentProcess().MainModule?.FileName;
+        if (exe != null)
         {
-            if (dict[i].Source?.OriginalString?.Contains("Colors.") == true)
-                dict.RemoveAt(i);
+            Process.Start(exe);
+            Application.Current.Shutdown();
         }
-        // Add new Colors dictionary
-        dict.Add(new ResourceDictionary
-        {
-            Source = new Uri($"pack://application:,,,/ExplorerTabUtility;component/UI/Themes/{colorsFile}")
-        });
     }
 }
