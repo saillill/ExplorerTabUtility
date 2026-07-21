@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Linq;
 using ExplorerTabUtility.Models;
 using ExplorerTabUtility.Helpers;
 using H.Hooks;
@@ -30,6 +31,19 @@ public partial class HotKeyProfileControl : UserControl
     }
 
     // Constructor
+    private static string GetEnumDisplay(Enum value)
+    {
+        var field = value.GetType().GetField(value.ToString());
+        var attr = field?.GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
+        return attr is { Length: > 0 } ? ((System.ComponentModel.DescriptionAttribute)attr[0]).Description : value.ToString();
+    }
+
+    private static object[] ToDisplayItems(Array values)
+    {
+        return values.Cast<Enum>().Select(v => new { Value = v, Display = GetEnumDisplay(v) }).ToArray();
+    }
+
+
     public HotKeyProfileControl(HotKeyProfile profile, Action<HotKeyProfile>? removeAction = null, Action? keybindingHookStarted = null,
         Action? keybindingHookStopped = null)
     {
@@ -54,11 +68,11 @@ public partial class HotKeyProfileControl : UserControl
             TxtHotKeys.Text = _profile.HotKeys.HotKeysToString(_profile.IsDoubleClick);
 
         // Setup ComboBoxes
-        CbScope.ItemsSource = Enum.GetValues(typeof(HotkeyScope));
-        CbScope.SelectedItem = _profile.Scope;
+        CbScope.ItemsSource = ToDisplayItems(Enum.GetValues(typeof(HotkeyScope)));
+        CbScope.SelectedValue = _profile.Scope;
 
         UpdateActionComboBox();
-        CbAction.SelectedItem = _profile.Action;
+        CbAction.SelectedValue = _profile.Action;
 
         TxtPath.Text = _profile.Path ?? string.Empty;
         NDelay.Value = _profile.Delay;
@@ -96,7 +110,7 @@ public partial class HotKeyProfileControl : UserControl
 
     private void CbScope_SelectedIndexChanged(object _, SelectionChangedEventArgs __)
     {
-        _profile.Scope = (HotkeyScope)(CbScope.SelectedItem ?? 0);
+        _profile.Scope = (HotkeyScope)(CbScope.SelectedValue ?? 0);
         UpdateActionComboBox();
     }
 
@@ -242,13 +256,13 @@ public partial class HotKeyProfileControl : UserControl
         var allowedActions = GetAllowedActions(_profile.Scope);
 
         // Preserve the current action if it's allowed, otherwise use the first allowed action
-        var currentAction = (HotKeyAction)(CbAction.SelectedItem ?? 0);
+        var currentAction = (HotKeyAction)(CbAction.SelectedValue ?? 0);
         var desiredAction = allowedActions.Contains(currentAction)
             ? currentAction
             : allowedActions.FirstOrDefault();
 
-        CbAction.ItemsSource = allowedActions;
-        CbAction.SelectedItem = desiredAction;
+        CbAction.ItemsSource = ToDisplayItems(allowedActions);
+        CbAction.SelectedValue = desiredAction;
     }
 
     private void UpdateControlsEnabledState()
@@ -271,7 +285,7 @@ public partial class HotKeyProfileControl : UserControl
 
     private void UpdateAction()
     {
-        var selectedAction = (HotKeyAction)(CbAction.SelectedItem ?? 0);
+        var selectedAction = (HotKeyAction)(CbAction.SelectedValue ?? 0);
         _profile.Action = selectedAction;
         switch (selectedAction)
         {

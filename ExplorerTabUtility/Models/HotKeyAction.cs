@@ -7,36 +7,36 @@ namespace ExplorerTabUtility.Models;
 [JsonConverter(typeof(HotKeyActionJsonConverter))]
 public enum HotKeyAction
 {
-    [Description("Open a new tab/window with the specified location.")]
+    [Description("打开")]
     Open,
-    [Description("Duplicate the current tab.")]
+    [Description("复制标签页")]
     Duplicate,
-    [Description("Reopen the last closed location.")]
+    [Description("重新打开已关闭")]
     ReopenClosed,
-    [Description("Open tab search popup to find and switch between tabs.")]
+    [Description("标签搜索")]
     TabSearch,
-    [Description("Navigate back.")]
+    [Description("后退")]
     NavigateBack,
-    [Description("Navigate up.")]
+    [Description("向上")]
     NavigateUp,
-    [Description("Navigate forward.")]
+    [Description("前进")]
     NavigateForward,
-    [Description("Mark the window that will receive the new tabs.")]
+    [Description("设置目标窗口")]
     SetTargetWindow,
-    [Description("Toggle the window hook.")]
+    [Description("切换窗口拦截")]
     ToggleWinHook,
-    [Description("Toggle the reuse tabs option.")]
+    [Description("切换标签复用")]
     ToggleReuseTabs,
-    [Description("Show/Hide the app.")]
+    [Description("显示/隐藏")]
     ToggleVisibility,
-    [Description("Detach the current tab.")]
+    [Description("分离标签页")]
     DetachTab,
-    [Description("Snap the current window to the right.")]
+    [Description("贴靠至右侧")]
     SnapRight,
-    [Description("Snap the current window to the left.")]
+    [Description("贴靠至左侧")]
     SnapLeft,
-    [Description("Snap the current window to the top.")]
+    [Description("贴靠至顶部")]
     SnapUp,
-    [Description("Snap the current window to the bottom.")]
+    [Description("贴靠至底部")]
     SnapDown
 }
