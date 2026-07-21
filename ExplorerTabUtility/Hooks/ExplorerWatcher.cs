@@ -1,4 +1,6 @@
 using Shell32;
+using System;
+using ExplorerTabUtility.Interop;
 using SHDocVw;
 using System;
 using System.Linq;
@@ -41,6 +43,7 @@ public class ExplorerWatcher : IHook
     private nint _eventObjectShowHookId;
     private WinEventDelegate? _eventObjectShowHookCallback;
     private DShellWindowsEvents_WindowRegisteredEventHandler? _windowRegisteredHandler;
+    private ComEventSink? _windowRegisteredSink;
 
     private string _defaultLocation = null!;
     private bool _reuseTabs = true;
@@ -345,8 +348,8 @@ public class ExplorerWatcher : IHook
             lock (_windowEntryDictLock)
             {
                 if (_windowEntryDict.Keys.Contains(window)) continue;
-                if (window.GetProperty("seenBefore") is not null) continue;
-                window.PutProperty("seenBefore", true);
+                if (((dynamic)window).GetProperty("seenBefore") is not null) continue;
+                ((dynamic)window).PutProperty("seenBefore", true);
 
                 windowInfo = new WindowInfo();
                 _windowEntryDict.Add(window, windowInfo);
@@ -410,6 +413,10 @@ public class ExplorerWatcher : IHook
             else
                 PreventWindowHiding(hWnd);
 
+            // Remove this location from closed list (race condition fix: OnQuit may add it async)
+            lock (_closedWindowsLock)
+                _closedWindows.RemoveAll(w => string.Equals(w.Location, location, StringComparison.OrdinalIgnoreCase));
+
             // Check if it is a detached tab
             var isRecentlyClosed = TryGetRecentlyClosedWindow(location, out var closedWindow);
             if (isRecentlyClosed)
@@ -424,6 +431,8 @@ public class ExplorerWatcher : IHook
                 _ = OpenTabNavigateWithSelection(new WindowRecord(location, hWnd, GetSelectedItems(window)), _mainWindowHandle);
 
                 window.Quit();
+                lock (_closedWindowsLock)
+                    _closedWindows.RemoveAll(w => string.Equals(w.Location, location, StringComparison.OrdinalIgnoreCase));
                 RemoveWindowAndUnhookEvents(window, windowInfo);
                 return;
             }
@@ -484,12 +493,12 @@ public class ExplorerWatcher : IHook
         try
         {
             // Subscribe
-            window.OnQuit += windowInfo.OnQuitHandler;
+            windowInfo.OnQuitSink = ComEventSink.Connect(window, typeof(SHDocVw.DWebBrowserEvents2).GUID, 253, windowInfo.OnQuitHandler);
             if (SettingsManager.RestorePreviousWindows)
             {
                 windowInfo.Location = GetLocation(window);
                 windowInfo.Name = window.LocationName;
-                window.NavigateComplete2 += windowInfo.OnNavigateHandler;
+                windowInfo.NavigateCompleteSink = ComEventSink.Connect(window, typeof(SHDocVw.DWebBrowserEvents2).GUID, 252, windowInfo.OnNavigateHandler);
             }
 
             // Make sure the window is still alive (User might have closed it immediately after opening it)
@@ -504,8 +513,8 @@ public class ExplorerWatcher : IHook
     private void RemoveWindowAndUnhookEvents(InternetExplorer window, WindowInfo windowInfo, bool useLock = true)
     {
         // Unsubscribe
-        if (windowInfo.OnQuitHandler != null) window.OnQuit -= windowInfo.OnQuitHandler;
-        if (windowInfo.OnNavigateHandler != null) window.NavigateComplete2 -= windowInfo.OnNavigateHandler;
+        if (windowInfo.OnQuitHandler != null) windowInfo.OnQuitSink?.Dispose(); windowInfo.OnQuitSink = null;
+        if (windowInfo.OnNavigateHandler != null) windowInfo.NavigateCompleteSink?.Dispose(); windowInfo.NavigateCompleteSink = null;
 
         // Remove from dictionary
         if (useLock)
@@ -561,7 +570,7 @@ public class ExplorerWatcher : IHook
                 Shell? shell = null;
                 try
                 {
-                    shell = new Shell();
+                    shell = (Shell)Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid("13709620-C279-11CE-A49E-444553540000"))!);
                     shell.ShellExecute(location, "", "", duplicate ? "opennewwindow" : "open");
                 }
                 finally
@@ -638,14 +647,16 @@ public class ExplorerWatcher : IHook
                 SelectItems(window, windowToOpen.SelectedItems);
             };
 
-            window.NavigateComplete2 += navigateHandler;
+            ComEventSink? tv = null;
+            navigateHandler = (object _, ref object _) => { tv?.Dispose(); tcs.TrySetResult(true); SelectItems(window, windowToOpen.SelectedItems); };
+            tv = ComEventSink.Connect(window, typeof(SHDocVw.DWebBrowserEvents2).GUID, 252, navigateHandler);
             try
             {
                 await Navigate(window, windowToOpen.Location);
             }
             catch
             {
-                window.NavigateComplete2 -= navigateHandler;
+                tv?.Dispose();
                 tcs.TrySetResult(false);
             }
 
@@ -794,7 +805,7 @@ public class ExplorerWatcher : IHook
             Folder? folder;
             try
             {
-                shell = new Shell();
+                shell = (Shell)Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid("13709620-C279-11CE-A49E-444553540000"))!);
                 folder = shell.NameSpace(path);
             }
             finally
@@ -893,7 +904,7 @@ public class ExplorerWatcher : IHook
     {
         _shellPathComparer = new ShellPathComparer();
         _staTaskScheduler = new StaTaskScheduler();
-        _shellWindows = new ShellWindows();
+        _shellWindows = (ShellWindows)Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid("9BA05972-F6A8-11CF-A442-00A0C90A8F39"))!);
 
         _defaultLocation = Helper.GetDefaultExplorerLocation(_shellPathComparer);
         
@@ -902,7 +913,7 @@ public class ExplorerWatcher : IHook
 
         // Hook the global "WindowRegistered" event
         _windowRegisteredHandler = OnShellWindowRegistered;
-        _shellWindows.WindowRegistered += _windowRegisteredHandler;
+        _windowRegisteredSink = ComEventSink.Connect(_shellWindows, typeof(SHDocVw.DShellWindowsEvents).GUID, 200, _windowRegisteredHandler);
 
         // Hook the global "OBJECT_SHOW" event
         _eventObjectShowHookCallback = OnWindowShown;
@@ -919,7 +930,7 @@ public class ExplorerWatcher : IHook
 
             var windowInfo = new WindowInfo();
             _windowEntryDict.Add(window, windowInfo);
-            window.PutProperty("seenBefore", true);
+            ((dynamic)window).PutProperty("seenBefore", true);
 
             _ = GetTabHandle(window);
             HookWindowEvents(window, windowInfo);
@@ -936,7 +947,7 @@ public class ExplorerWatcher : IHook
         // Unhook global event
         if (_windowRegisteredHandler != null)
         {
-            _shellWindows.WindowRegistered -= _windowRegisteredHandler;
+            _windowRegisteredSink?.Dispose(); _windowRegisteredSink = null;
             _windowRegisteredHandler = null;
         }
         if (_eventObjectShowHookCallback != null)
@@ -949,8 +960,8 @@ public class ExplorerWatcher : IHook
         foreach (var (window, windowInfo) in _windowEntryDict)
         {
             // Unsubscribe
-            if (windowInfo.OnQuitHandler != null) window.OnQuit -= windowInfo.OnQuitHandler;
-            if (windowInfo.OnNavigateHandler != null) window.NavigateComplete2 -= windowInfo.OnNavigateHandler;
+            if (windowInfo.OnQuitHandler != null) windowInfo.OnQuitSink?.Dispose(); windowInfo.OnQuitSink = null;
+            if (windowInfo.OnNavigateHandler != null) windowInfo.NavigateCompleteSink?.Dispose(); windowInfo.NavigateCompleteSink = null;
 
             // Release the COM object
             Marshal.ReleaseComObject(window);

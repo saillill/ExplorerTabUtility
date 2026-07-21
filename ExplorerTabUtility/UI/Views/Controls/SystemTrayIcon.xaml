@@ -16,7 +16,7 @@
                 <MenuItem Name="KeyboardHookMenu"
                           IsCheckable="False"
                           IsChecked="{Binding Source={x:Static managers:SettingsManager.IsKeyboardHookActive}, Mode=OneTime}"
-                          ToolTip="Enable or disable keyboard shortcuts">
+                          ToolTip="启用或禁用键盘快捷键">
                     <MenuItem.Header>
                         <Grid>
                             <CheckBox Command="{Binding RelativeSource={RelativeSource AncestorType=MenuItem}, Path=Command}"
@@ -26,7 +26,7 @@
                                       Margin="-35,0,0,0"
                                       HorizontalAlignment="Stretch"
                                       VerticalAlignment="Stretch" />
-                            <TextBlock Text="Keyboard Hook" Background="Transparent" IsHitTestVisible="False" VerticalAlignment="Center" />
+                            <TextBlock Text="键盘快捷键" Background="Transparent" IsHitTestVisible="False" VerticalAlignment="Center" />
                         </Grid>
                     </MenuItem.Header>
                     <MenuItem.Icon>
@@ -39,7 +39,7 @@
                 <MenuItem Name="MouseHookMenu"
                           IsCheckable="False"
                           IsChecked="{Binding Source={x:Static managers:SettingsManager.IsMouseHookActive}, Mode=OneTime}"
-                          ToolTip="Enable or disable mouse shortcuts">
+                          ToolTip="启用或禁用鼠标快捷键">
                     <MenuItem.Header>
                         <Grid>
                             <CheckBox Command="{Binding RelativeSource={RelativeSource AncestorType=MenuItem}, Path=Command}"
@@ -49,7 +49,7 @@
                                       Margin="-35,0,0,0"
                                       HorizontalAlignment="Stretch"
                                       VerticalAlignment="Stretch" />
-                            <TextBlock Text="Mouse Hook" Background="Transparent" IsHitTestVisible="False" VerticalAlignment="Center" />
+                            <TextBlock Text="鼠标快捷键" Background="Transparent" IsHitTestVisible="False" VerticalAlignment="Center" />
                         </Grid>
                     </MenuItem.Header>
                     <MenuItem.Icon>
@@ -59,24 +59,24 @@
                 </MenuItem>
 
                 <!-- Window Hook -->
-                <MenuItem Header="Window Hook"
+                <MenuItem Header="窗口拦截"
                           Name="WindowHook"
                           StaysOpenOnClick="True"
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static managers:SettingsManager.IsWindowHookActive}, Mode=OneTime}"
-                          ToolTip="Toggle automatic redirection of new Explorer windows to tabs">
+                          ToolTip="切换自动将新资源管理器窗口合并为标签页">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE8A7;" FontSize="14" />
                     </MenuItem.Icon>
                 </MenuItem>
 
                 <!-- Reuse Tabs -->
-                <MenuItem Header="Reuse Tabs"
+                <MenuItem Header="标签复用"
                           Name="ReuseTabs"
                           StaysOpenOnClick="True"
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static managers:SettingsManager.ReuseTabs}, Mode=OneTime}"
-                          ToolTip="When enabled, navigates to existing tabs instead of opening duplicate tabs">
+                          ToolTip="启用后导航到现有标签页，而不是打开重复标签页">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE8EE;" FontSize="14" />
                     </MenuItem.Icon>
@@ -85,12 +85,12 @@
                 <Separator />
 
                 <!-- Add to startup -->
-                <MenuItem Header="Add to startup"
+                <MenuItem Header="开机自启"
                           Name="AddToStartup"
                           StaysOpenOnClick="True"
                           IsCheckable="True"
                           IsChecked="{Binding Source={x:Static managers:RegistryManager.IsStartupEnabled}, Mode=OneTime}"
-                          ToolTip="Automatically start Explorer Tab Utility when Windows starts">
+                          ToolTip="Windows 启动时自动运行">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE7F4;" FontSize="14" />
                     </MenuItem.Icon>
@@ -98,8 +98,8 @@
 
                 <!-- Check for updates -->
                 <MenuItem x:Name="CheckForUpdates"
-                          Header="Check for updates"
-                          ToolTip="Check if a newer version of Explorer Tab Utility is available">
+                          Header="检查更新"
+                          ToolTip="检查是否有新版本可用">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE896;" FontSize="14" />
                     </MenuItem.Icon>
@@ -107,8 +107,8 @@
 
                 <!-- Settings -->
                 <MenuItem x:Name="OpenSettings"
-                          Header="Settings"
-                          ToolTip="Open the settings window to configure the application">
+                          Header="设置"
+                          ToolTip="打开设置窗口配置应用">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE713;" FontSize="14" />
                     </MenuItem.Icon>
@@ -118,8 +118,8 @@
 
                 <!-- Exit -->
                 <MenuItem x:Name="ExitApplication"
-                          Header="Exit"
-                          ToolTip="Close Explorer Tab Utility and stop all hooks">
+                          Header="退出"
+                          ToolTip="关闭应用并停止所有拦截">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE7E8;" FontSize="14" Foreground="{StaticResource DangerBrush}" />
                     </MenuItem.Icon>

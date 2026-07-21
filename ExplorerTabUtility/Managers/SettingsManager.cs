@@ -4,6 +4,7 @@ using System.Windows;
 using System.Text.Json;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using ExplorerTabUtility.Models;
 using ExplorerTabUtility.Helpers;
 
@@ -12,12 +13,20 @@ namespace ExplorerTabUtility.Managers;
 public static class SettingsManager
 {
     private static readonly AppSettings Settings;
+    private static readonly object SaveLock = new();
+    private static Timer? DebounceTimer;
+    private static bool IsDirty;
+    private const int DebounceMs = 500;
+
     public static event EventHandler<PropertyChangedEventArgs>? StaticPropertyChanged;
+    public static bool WasRecoveredFromBackup { get; private set; }
 
     private static readonly string SettingsFilePath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
         Constants.AppName,
         Constants.SettingsFileName);
+
+    private static readonly string BackupFilePath = SettingsFilePath + ".bak";
 
     static SettingsManager()
     {
@@ -29,179 +38,105 @@ public static class SettingsManager
             Settings = new AppSettings();
             return;
         }
+        if (TryLoad(SettingsFilePath, out var loaded))
+        {
+            Settings = loaded;
+            return;
+        }
+        if (File.Exists(BackupFilePath) && TryLoad(BackupFilePath, out var backup))
+        {
+            Settings = backup;
+            WasRecoveredFromBackup = true;
+            try { WriteAtomic(SettingsFilePath, backup); } catch { }
+            return;
+        }
+        Settings = new AppSettings();
+    }
 
+    private static bool TryLoad(string path, out AppSettings s)
+    {
+        s = null!;
         try
         {
-            var json = File.ReadAllText(SettingsFilePath);
-            Settings = JsonSerializer.Deserialize<AppSettings>(json) ?? new AppSettings();
+            var json = File.ReadAllText(path);
+            if (string.IsNullOrWhiteSpace(json)) return false;
+            var r = JsonSerializer.Deserialize<AppSettings>(json);
+            if (r == null) return false;
+            s = r; return true;
         }
-        catch (Exception)
-        {
-            Settings = new AppSettings();
-        }
+        catch { return false; }
     }
 
     private static void NotifyStaticPropertyChanged([CallerMemberName] string propertyName = "")
-    {
-        StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
-    }
+        => StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
 
     public static bool IsMouseHookActive
-    {
-        get => Settings.MouseHook;
-        set
-        {
-            Settings.MouseHook = value;
-            SaveSettings();
-            NotifyStaticPropertyChanged();
-        }
-    }
-
+    { get => Settings.MouseHook; set { Settings.MouseHook = value; DebounceSave(); NotifyStaticPropertyChanged(); } }
     public static bool IsKeyboardHookActive
-    {
-        get => Settings.KeyboardHook;
-        set
-        {
-            Settings.KeyboardHook = value;
-            SaveSettings();
-            NotifyStaticPropertyChanged();
-        }
-    }
-
+    { get => Settings.KeyboardHook; set { Settings.KeyboardHook = value; DebounceSave(); NotifyStaticPropertyChanged(); } }
     public static bool IsWindowHookActive
-    {
-        get => Settings.WindowHook;
-        set
-        {
-            Settings.WindowHook = value;
-            SaveSettings();
-            NotifyStaticPropertyChanged();
-        }
-    }
-
+    { get => Settings.WindowHook; set { Settings.WindowHook = value; DebounceSave(); NotifyStaticPropertyChanged(); } }
     public static bool ReuseTabs
-    {
-        get => Settings.ReuseTabs;
-        set
-        {
-            Settings.ReuseTabs = value;
-            SaveSettings();
-            NotifyStaticPropertyChanged();
-        }
-    }
-
+    { get => Settings.ReuseTabs; set { Settings.ReuseTabs = value; DebounceSave(); NotifyStaticPropertyChanged(); } }
     public static string HotKeyProfiles
-    {
-        get => Settings.HotKeyProfiles;
-        set
-        {
-            Settings.HotKeyProfiles = value;
-            SaveSettings();
-        }
-    }
-
+    { get => Settings.HotKeyProfiles; set { Settings.HotKeyProfiles = value; DebounceSave(); } }
     public static Size FormSize
-    {
-        get => Settings.FormSize;
-        set
-        {
-            Settings.FormSize = value;
-            SaveSettings();
-        }
-    }
-
+    { get => Settings.FormSize; set { Settings.FormSize = value; DebounceSave(); } }
     public static bool SaveProfilesOnExit
-    {
-        get => Settings.SaveProfilesOnExit;
-        set
-        {
-            Settings.SaveProfilesOnExit = value;
-            SaveSettings();
-        }
-    }
-
+    { get => Settings.SaveProfilesOnExit; set { Settings.SaveProfilesOnExit = value; DebounceSave(); } }
     public static bool IsFirstRun
-    {
-        get => Settings.IsFirstRun;
-        set
-        {
-            Settings.IsFirstRun = value;
-            SaveSettings();
-        }
-    }
-
+    { get => Settings.IsFirstRun; set { Settings.IsFirstRun = value; DebounceSave(); } }
     public static bool IsTrayIconHidden
-    {
-        get => Settings.IsTrayIconHidden;
-        set
-        {
-            Settings.IsTrayIconHidden = value;
-            SaveSettings();
-        }
-    }
-
+    { get => Settings.IsTrayIconHidden; set { Settings.IsTrayIconHidden = value; DebounceSave(); } }
     public static bool HaveThemeIssue
-    {
-        get => Settings.HaveThemeIssue;
-        set
-        {
-            Settings.HaveThemeIssue = value;
-            SaveSettings();
-        }
-    }
-
+    { get => Settings.HaveThemeIssue; set { Settings.HaveThemeIssue = value; DebounceSave(); } }
     public static bool AutoUpdate
-    {
-        get => Settings.AutoUpdate;
-        set
-        {
-            Settings.AutoUpdate = value;
-            SaveSettings();
-        }
-    }
-
+    { get => Settings.AutoUpdate; set { Settings.AutoUpdate = value; DebounceSave(); } }
     public static bool SaveClosedHistory
-    {
-        get => Settings.SaveClosedWindows;
-        set
-        {
-            Settings.SaveClosedWindows = value;
-            SaveSettings();
-        }
-    }
-
+    { get => Settings.SaveClosedWindows; set { Settings.SaveClosedWindows = value; DebounceSave(); } }
     public static bool RestorePreviousWindows
-    {
-        get => Settings.RestorePreviousWindows;
-        set
-        {
-            Settings.RestorePreviousWindows = value;
-            SaveSettings();
-        }
-    }
-
+    { get => Settings.RestorePreviousWindows; set { Settings.RestorePreviousWindows = value; DebounceSave(); } }
     public static WindowRecord[]? ClosedWindows
+    { get => Settings.ClosedWindows; set { Settings.ClosedWindows = value; DebounceSave(); } }
+
+    private static void DebounceSave()
     {
-        get => Settings.ClosedWindows;
-        set
-        {
-            Settings.ClosedWindows = value;
-            SaveSettings();
-        }
+        IsDirty = true;
+        if (DebounceTimer == null)
+            DebounceTimer = new Timer(_ => { lock (SaveLock) { if (IsDirty) { IsDirty = false; DoSave(); } } }, null, DebounceMs, Timeout.Infinite);
+        else
+            DebounceTimer.Change(DebounceMs, Timeout.Infinite);
     }
 
-
-    public static void SaveSettings()
+    public static void ForceSave()
     {
-        try
+        DebounceTimer?.Dispose(); DebounceTimer = null;
+        lock (SaveLock) { if (IsDirty) { IsDirty = false; DoSave(); } }
+    }
+
+    public static void SaveSettings() => ForceSave();
+
+    private static void DoSave() { try { WriteAtomic(SettingsFilePath, Settings); } catch { } }
+
+    private static void WriteAtomic(string path, AppSettings s)
+    {
+        var tmp = path + ".tmp";
+        var bak = path + ".bak";
+        var json = JsonSerializer.Serialize(s);
+        File.WriteAllText(tmp, json);
+        // verify
+        var vfy = File.ReadAllText(tmp);
+        var obj = JsonSerializer.Deserialize<AppSettings>(vfy);
+        if (obj == null) { try { File.Delete(tmp); } catch { } return; }
+        // backup
+        if (File.Exists(path))
         {
-            var json = JsonSerializer.Serialize(Settings);
-            File.WriteAllText(SettingsFilePath, json);
+            try { File.Copy(path, bak, overwrite: true); } catch { }
         }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"Failed to save settings: {ex.Message}");
-        }
+        // atomic replace
+        try { File.Delete(path); } catch (FileNotFoundException) { }
+        File.Move(tmp, path);
+        try { if (File.Exists(tmp)) File.Delete(tmp); } catch { }
     }
 }
 

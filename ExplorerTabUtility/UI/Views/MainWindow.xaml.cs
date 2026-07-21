@@ -241,6 +241,9 @@ public partial class MainWindow : Window
 
     private void OnApplicationExit(object _, ExitEventArgs __)
     {
+        // Force-save any pending settings changes before shutdown.
+        SettingsManager.ForceSave();
+
         _notifyIconManager.Dispose();
         _hookManager.Dispose();
     }
