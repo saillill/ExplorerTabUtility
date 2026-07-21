@@ -36,7 +36,13 @@ public partial class MainWindow : Window
         StartHooks();
 
         // Auto-update removed
-        CbTheme.SelectedIndex = SettingsManager.ThemeMode;
+        CbTheme.ItemsSource = new[]
+        {
+            new ExplorerTabUtility.Models.DisplayItem<int>("跟随系统", 0),
+            new ExplorerTabUtility.Models.DisplayItem<int>("深色", 1),
+            new ExplorerTabUtility.Models.DisplayItem<int>("浅色", 2),
+        };
+        CbTheme.SelectedValue = SettingsManager.ThemeMode;
         CbThemeIssue.IsChecked = SettingsManager.HaveThemeIssue;
         CbHideTrayIcon.IsChecked = SettingsManager.IsTrayIconHidden;
         CbAutoSaveProfiles.IsChecked = SettingsManager.SaveProfilesOnExit;
@@ -165,9 +171,9 @@ public partial class MainWindow : Window
 
     private void CbTheme_SelectionChanged(object? _, System.Windows.Controls.SelectionChangedEventArgs __)
     {
-        if (CbTheme.SelectedItem is System.Windows.Controls.ComboBoxItem item && item.Tag != null)
+        if (CbTheme.SelectedValue is int val)
         {
-            ThemeManager.CurrentTheme = (AppTheme)int.Parse(item.Tag.ToString()!);
+            ThemeManager.CurrentTheme = (AppTheme)val;
         }
     }
 
