@@ -54,7 +54,7 @@ public partial class SystemTrayIcon : UserControl, IDisposable
         ReuseTabs.Command = new RelayCommand(_ => ToggleReuseTabs());
         AddToStartup.Command = new RelayCommand(_ => ToggleStartup());
         OpenSettings.Command = new RelayCommand(_ => _showWindowAction());
-        CheckForUpdates.Command = new RelayCommand(_ => UpdateManager.CheckForUpdates());
+        // CheckForUpdates removed
         ExitApplication.Command = new RelayCommand(_ => Application.Current.Shutdown());
     }
 

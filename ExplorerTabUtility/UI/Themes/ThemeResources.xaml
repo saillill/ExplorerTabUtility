@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/ExplorerTabUtility;component/UI/Themes/Colors.Dark.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ExplorerTabUtility;component/UI/Themes/BorderStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ExplorerTabUtility;component/UI/Themes/ButtonStyles.xaml" />
         <ResourceDictionary Source="pack://application:,,,/ExplorerTabUtility;component/UI/Themes/CheckBoxStyles.xaml" />

@@ -90,6 +90,12 @@ public static class SettingsManager
     { get => Settings.IsTrayIconHidden; set { Settings.IsTrayIconHidden = value; DebounceSave(); } }
     public static bool HaveThemeIssue
     { get => Settings.HaveThemeIssue; set { Settings.HaveThemeIssue = value; DebounceSave(); } }
+    public static int ThemeMode
+    {
+        get => Settings.ThemeMode;
+        set { Settings.ThemeMode = value; SaveSettings(); }
+    }
+
     public static bool AutoUpdate
     { get => Settings.AutoUpdate; set { Settings.AutoUpdate = value; DebounceSave(); } }
     public static bool SaveClosedHistory
@@ -151,6 +157,7 @@ internal class AppSettings
     public bool IsFirstRun { get; set; } = true;
     public bool IsTrayIconHidden { get; set; }
     public bool HaveThemeIssue { get; set; }
+    public int ThemeMode { get; set; }
     public bool AutoUpdate { get; set; }
     public string HotKeyProfiles { get; set; } = Constants.DefaultHotKeyProfiles;
     public bool SaveClosedWindows { get; set; }

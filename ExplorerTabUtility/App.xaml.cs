@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows.Controls;
 using ExplorerTabUtility.UI.Views;
 using ExplorerTabUtility.Helpers;
+using ExplorerTabUtility.Managers;
 
 namespace ExplorerTabUtility;
 
@@ -20,6 +21,7 @@ public partial class App : Application
             base.OnStartup(e);
             SetupTooltipBehavior();
 
+            ThemeManager.Initialize();
             _ = new MainWindow();
             return;
         }

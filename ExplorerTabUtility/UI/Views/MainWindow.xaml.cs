@@ -35,7 +35,8 @@ public partial class MainWindow : Window
         SetupEventHandlers();
         StartHooks();
 
-        CbAutoUpdate.IsChecked = SettingsManager.AutoUpdate;
+        // Auto-update removed
+        CbTheme.SelectedIndex = SettingsManager.ThemeMode;
         CbThemeIssue.IsChecked = SettingsManager.HaveThemeIssue;
         CbHideTrayIcon.IsChecked = SettingsManager.IsTrayIconHidden;
         CbAutoSaveProfiles.IsChecked = SettingsManager.SaveProfilesOnExit;
@@ -43,9 +44,7 @@ public partial class MainWindow : Window
         CbRestorePreviousWindows.IsChecked = SettingsManager.RestorePreviousWindows;
         UpdateTrayIconVisibility(false);
 
-        if (SettingsManager.AutoUpdate)
-            UpdateManager.CheckForUpdates();
-
+        
         // Show the window if this is the first run
         if (SettingsManager.IsFirstRun)
         {
@@ -69,8 +68,7 @@ public partial class MainWindow : Window
         CbSaveClosedHistory.Unchecked += CbSaveClosedHistory_CheckedChanged;
         CbRestorePreviousWindows.Checked += CbRestorePreviousWindows_CheckedChanged;
         CbRestorePreviousWindows.Unchecked += CbRestorePreviousWindows_CheckedChanged;
-        CbAutoUpdate.Checked += CbAutoUpdate_CheckedChanged;
-        CbAutoUpdate.Unchecked += CbAutoUpdate_CheckedChanged;
+        CbTheme.SelectionChanged += CbTheme_SelectionChanged;
         CbThemeIssue.Checked += CbThemeIssue_CheckedChanged;
         CbThemeIssue.Unchecked += CbThemeIssue_CheckedChanged;
         CbHideTrayIcon.Checked += CbHideTrayIcon_CheckedChanged;
@@ -165,9 +163,12 @@ public partial class MainWindow : Window
         SettingsManager.SaveProfilesOnExit = CbAutoSaveProfiles.IsChecked ?? false;
     }
 
-    private void CbAutoUpdate_CheckedChanged(object? _, RoutedEventArgs __)
+    private void CbTheme_SelectionChanged(object? _, System.Windows.Controls.SelectionChangedEventArgs __)
     {
-        SettingsManager.AutoUpdate = CbAutoUpdate.IsChecked ?? false;
+        if (CbTheme.SelectedItem is System.Windows.Controls.ComboBoxItem item && item.Tag != null)
+        {
+            ThemeManager.CurrentTheme = (AppTheme)int.Parse(item.Tag.ToString()!);
+        }
     }
 
     private void CbThemeIssue_CheckedChanged(object? _, RoutedEventArgs __)

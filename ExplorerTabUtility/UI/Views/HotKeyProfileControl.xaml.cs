@@ -74,6 +74,7 @@ public partial class HotKeyProfileControl : UserControl
         CbScope.SelectedValue = _profile.Scope;
 
         UpdateActionComboBox();
+        CbAction.ItemsSource = ToDisplayItems(Enum.GetValues(typeof(HotKeyAction)));
         CbAction.SelectedValue = _profile.Action;
 
         TxtPath.Text = _profile.Path ?? string.Empty;
@@ -310,7 +311,7 @@ public partial class HotKeyProfileControl : UserControl
         // If the name is empty or is an exact match of an action, set it to the hotkey.
         var isExactMatch = Enum.GetNames(typeof(HotKeyAction)).Any(a => a == TxtName.Text);
         if (string.IsNullOrWhiteSpace(TxtName.Text) || isExactMatch)
-            TxtName.Text = selectedAction.ToString();
+            TxtName.Text = GetEnumDisplay(selectedAction);
     }
 
     private static HotKeyAction[] GetAllowedActions(HotkeyScope scope)

@@ -96,15 +96,6 @@
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <!-- Check for updates -->
-                <MenuItem x:Name="CheckForUpdates"
-                          Header="检查更新"
-                          ToolTip="检查是否有新版本可用">
-                    <MenuItem.Icon>
-                        <TextBlock Text="&#xE896;" FontSize="14" />
-                    </MenuItem.Icon>
-                </MenuItem>
-
                 <!-- Settings -->
                 <MenuItem x:Name="OpenSettings"
                           Header="设置"
