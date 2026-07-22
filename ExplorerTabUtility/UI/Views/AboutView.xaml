@@ -471,7 +471,7 @@
                         <TextBlock Text="支持本项目"
                                    Style="{StaticResource SectionTitleStyle}" />
 
-                        <TextBlock Text="If you find this utility helpful, consider supporting its development through one of these options:"
+                        <TextBlock Text="如果您觉得这个工具好用，可以通过以下方式支持开发："
                                    TextWrapping="Wrap"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    Height="42"
@@ -591,10 +591,10 @@
 
                     <!-- Right Column: Supporters -->
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="Current Supporters"
+                        <TextBlock Text="当前支持者"
                                    Style="{StaticResource SectionTitleStyle}" />
 
-                        <TextBlock Text="Thank you to all the amazing people who support this project!"
+                        <TextBlock Text="感谢所有支持本项目的朋友们！"
                                    TextWrapping="Wrap"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    Height="42"
@@ -631,13 +631,13 @@
                                                                                               Opacity="0.5" />
                                                                         </TextBlock.Effect>
                                                                     </TextBlock>
-                                                                    <TextBlock Text="Be the first to support this project!"
+                                                                    <TextBlock Text="成为第一个支持本项目的人！"
                                                                                TextWrapping="Wrap"
                                                                                FontSize="16"
                                                                                FontWeight="Medium"
                                                                                Foreground="{StaticResource TextSecondaryBrush}"
                                                                                HorizontalAlignment="Center" />
-                                                                    <TextBlock Text="Your support helps keep this project alive"
+                                                                    <TextBlock Text="您的支持让这个项目得以持续"
                                                                                TextWrapping="Wrap"
                                                                                Margin="0,8,0,0"
                                                                                Foreground="{StaticResource TextSecondaryBrush}"

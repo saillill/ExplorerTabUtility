@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!-- Fonts -->
-    <FontFamily x:Key="DefaultFontFamily">Microsoft YaHei, Segoe Fluent Icons, Segoe MDL2 Assets, sans-serif</FontFamily>
+    <FontFamily x:Key="DefaultFontFamily">Microsoft YaHei, Segoe UI, Segoe MDL2 Assets, sans-serif</FontFamily>
     <FontWeight x:Key="DefaultFontWeight">Normal</FontWeight>
     <system:Double x:Key="DefaultFontSize">16</system:Double>
 

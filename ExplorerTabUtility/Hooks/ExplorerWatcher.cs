@@ -639,14 +639,6 @@ public class ExplorerWatcher : IHook
             if (window == null) return;
 
             var tcs = new TaskCompletionSource<bool>();
-            DWebBrowserEvents2_NavigateComplete2EventHandler navigateHandler = null!;
-            navigateHandler = (object _, ref object _) =>
-            {
-                window.NavigateComplete2 -= navigateHandler;
-                tcs.TrySetResult(true);
-                SelectItems(window, windowToOpen.SelectedItems);
-            };
-
             ComEventSink? tv = null;
             navigateHandler = (object _, ref object _) => { tv?.Dispose(); tcs.TrySetResult(true); SelectItems(window, windowToOpen.SelectedItems); };
             tv = ComEventSink.Connect(window, typeof(SHDocVw.DWebBrowserEvents2).GUID, 252, navigateHandler);

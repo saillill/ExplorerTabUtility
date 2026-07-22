@@ -79,7 +79,7 @@ public static class SettingsManager
     public static bool ReuseTabs
     { get => Settings.ReuseTabs; set { Settings.ReuseTabs = value; DebounceSave(); NotifyStaticPropertyChanged(); } }
     public static string HotKeyProfiles
-    { get => Settings.HotKeyProfiles; set { Settings.HotKeyProfiles = value; DebounceSave(); } }
+    { get => Settings.HotKeyProfiles; set { Settings.HotKeyProfiles = value; DebounceSave(); NotifyStaticPropertyChanged(); } }
     public static Size FormSize
     { get => Settings.FormSize; set { Settings.FormSize = value; DebounceSave(); } }
     public static bool SaveProfilesOnExit
@@ -93,11 +93,9 @@ public static class SettingsManager
     public static int ThemeMode
     {
         get => Settings.ThemeMode;
-        set { Settings.ThemeMode = value; SaveSettings(); }
+        set { Settings.ThemeMode = value; DebounceSave(); NotifyStaticPropertyChanged(); }
     }
 
-    public static bool AutoUpdate
-    { get => Settings.AutoUpdate; set { Settings.AutoUpdate = value; DebounceSave(); } }
     public static bool SaveClosedHistory
     { get => Settings.SaveClosedWindows; set { Settings.SaveClosedWindows = value; DebounceSave(); } }
     public static bool RestorePreviousWindows
@@ -130,10 +128,6 @@ public static class SettingsManager
         var bak = path + ".bak";
         var json = JsonSerializer.Serialize(s);
         File.WriteAllText(tmp, json);
-        // verify
-        var vfy = File.ReadAllText(tmp);
-        var obj = JsonSerializer.Deserialize<AppSettings>(vfy);
-        if (obj == null) { try { File.Delete(tmp); } catch { } return; }
         // backup
         if (File.Exists(path))
         {
@@ -158,7 +152,6 @@ internal class AppSettings
     public bool IsTrayIconHidden { get; set; }
     public bool HaveThemeIssue { get; set; }
     public int ThemeMode { get; set; }
-    public bool AutoUpdate { get; set; }
     public string HotKeyProfiles { get; set; } = Constants.DefaultHotKeyProfiles;
     public bool SaveClosedWindows { get; set; }
     public bool RestorePreviousWindows { get; set; }

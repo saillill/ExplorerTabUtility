@@ -47,7 +47,8 @@
                          ToolTip="Keyboard or mouse keys to listen for. Click to record a new key combination." />
 
                 <!-- Scope -->
-                <ComboBox x:Name="CbScope" Grid.Column="5" Style="{StaticResource CustomComboBoxStyle}" SelectedValuePath="Value">
+                <ComboBox x:Name="CbScope" Grid.Column="5" Style="{StaticResource CustomComboBoxStyle}" SelectedValuePath="Value"
+                         ToolTip="快捷键作用域：全局（任意位置）或仅限资源管理器窗口时生效">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Display}"/>
@@ -56,7 +57,8 @@
                 </ComboBox>
 
                 <!-- Action -->
-                <ComboBox x:Name="CbAction" Grid.Column="6" Style="{StaticResource CustomComboBoxStyle}" Width="150" SelectedValuePath="Value">
+                <ComboBox x:Name="CbAction" Grid.Column="6" Style="{StaticResource CustomComboBoxStyle}" Width="150" SelectedValuePath="Value"
+                         ToolTip="快捷键触发时执行的操作">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Display}"/>

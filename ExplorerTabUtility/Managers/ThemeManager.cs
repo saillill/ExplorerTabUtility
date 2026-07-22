@@ -62,8 +62,15 @@ public static class ThemeManager
         var exe = Process.GetCurrentProcess().MainModule?.FileName;
         if (exe != null)
         {
-            Process.Start(exe);
-            Application.Current.Shutdown();
+            try
+            {
+                Process.Start(new ProcessStartInfo(exe) { UseShellExecute = true });
+                Application.Current.Shutdown();
+            }
+            catch
+            {
+                // Failed to restart — keep running with current theme until next manual restart
+            }
         }
     }
 }
