@@ -2,7 +2,6 @@ using Shell32;
 using System;
 using ExplorerTabUtility.Interop;
 using SHDocVw;
-using System;
 using System.Linq;
 using System.Windows;
 using System.Threading;
@@ -640,6 +639,7 @@ public class ExplorerWatcher : IHook
 
             var tcs = new TaskCompletionSource<bool>();
             ComEventSink? tv = null;
+            DWebBrowserEvents2_NavigateComplete2EventHandler navigateHandler = null!;
             navigateHandler = (object _, ref object _) => { tv?.Dispose(); tcs.TrySetResult(true); SelectItems(window, windowToOpen.SelectedItems); };
             tv = ComEventSink.Connect(window, typeof(SHDocVw.DWebBrowserEvents2).GUID, 252, navigateHandler);
             try
