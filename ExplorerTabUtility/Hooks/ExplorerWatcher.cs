@@ -530,8 +530,8 @@ public class ExplorerWatcher : IHook
     private async Task RestorePreviousWindows()
     {
         var result = await RunInStaThread(() => CustomMessageBox.Show(
-            "Do you want to restore previously opened windows?",
-            "Explorer Tab Utility",
+            LocalizationService.Get("RestoreWindowsPrompt"),
+            Constants.AppName,
             MessageBoxButton.YesNo,
             MessageBoxImage.Question));
 

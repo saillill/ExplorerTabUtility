@@ -36,10 +36,8 @@ public partial class App : Application
             return;
         }
 
-        CustomMessageBox.Show("""
-                              Another instance is already running.
-                              Check in System Tray Icons.
-                              """, Constants.AppName, icon: MessageBoxImage.Information);
+        CustomMessageBox.Show(LocalizationService.Get("AlreadyRunning"),
+            Constants.AppName, icon: MessageBoxImage.Information);
         Shutdown();
     }
 
