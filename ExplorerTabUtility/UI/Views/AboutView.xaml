@@ -405,7 +405,7 @@
                                        VerticalAlignment="Bottom" />
                         </StackPanel>
 
-                        <TextBlock Text="增强 Windows 文件资源管理器体验"
+                        <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[AppDescription]}"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    HorizontalAlignment="Center"
                                    Margin="0,0,0,4" />
@@ -450,7 +450,7 @@
                                         <ScaleTransform ScaleX="1" ScaleY="1" />
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
-                                <TextBlock Text="在 GitHub 上标星"
+                                <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[StarOnGitHub]}"
                                            FontWeight="SemiBold"
                                            VerticalAlignment="Center" />
                             </StackPanel>
@@ -468,10 +468,10 @@
 
                     <!-- Left Column: Support Options -->
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="支持本项目"
+                        <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[SupportProject]}"
                                    Style="{StaticResource SectionTitleStyle}" />
 
-                        <TextBlock Text="如果您觉得这个工具好用，可以通过以下方式支持开发："
+                        <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[SupportDescription]}"
                                    TextWrapping="Wrap"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    Height="42"
@@ -532,7 +532,7 @@
                         <Border Margin="0,24,0,0" CornerRadius="8"
                                 Style="{StaticResource ProfileCardStyle}">
                             <StackPanel>
-                                <TextBlock Text="开发者"
+                                <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[Developer]}"
                                            FontWeight="SemiBold"
                                            FontSize="18"
                                            Foreground="{StaticResource TextPrimaryBrush}"
@@ -591,10 +591,10 @@
 
                     <!-- Right Column: Supporters -->
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="当前支持者"
+                        <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[CurrentSupporters]}"
                                    Style="{StaticResource SectionTitleStyle}" />
 
-                        <TextBlock Text="感谢所有支持本项目的朋友们！"
+                        <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[SupportersThanks]}"
                                    TextWrapping="Wrap"
                                    Foreground="{StaticResource TextSecondaryBrush}"
                                    Height="42"
@@ -631,13 +631,13 @@
                                                                                               Opacity="0.5" />
                                                                         </TextBlock.Effect>
                                                                     </TextBlock>
-                                                                    <TextBlock Text="成为第一个支持本项目的人！"
+                                                                    <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[BeFirst]}"
                                                                                TextWrapping="Wrap"
                                                                                FontSize="16"
                                                                                FontWeight="Medium"
                                                                                Foreground="{StaticResource TextSecondaryBrush}"
                                                                                HorizontalAlignment="Center" />
-                                                                    <TextBlock Text="您的支持让这个项目得以持续"
+                                                                    <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[SupportHelps]}"
                                                                                TextWrapping="Wrap"
                                                                                Margin="0,8,0,0"
                                                                                Foreground="{StaticResource TextSecondaryBrush}"

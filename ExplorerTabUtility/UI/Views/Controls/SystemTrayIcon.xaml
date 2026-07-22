@@ -12,71 +12,59 @@
 
         <tb:TaskbarIcon.ContextMenu>
             <ContextMenu>
-                <!-- Keyboard Hook -->
                 <MenuItem Name="KeyboardHookMenu"
                           IsCheckable="False"
                           IsChecked="{Binding Source={x:Static managers:SettingsManager.IsKeyboardHookActive}, Mode=OneTime}"
-                          ToolTip="启用或禁用键盘快捷键">
+                          ToolTip="{Binding Source={StaticResource Loc}, Path=[KeyboardShortcut]}">
                     <MenuItem.Header>
                         <Grid>
                             <CheckBox Command="{Binding RelativeSource={RelativeSource AncestorType=MenuItem}, Path=Command}"
                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=MenuItem}, Path=CommandParameter}"
-                                      Background="Transparent"
-                                      Opacity="0"
-                                      Margin="-35,0,0,0"
-                                      HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Stretch" />
-                            <TextBlock Text="键盘快捷键" Background="Transparent" IsHitTestVisible="False" VerticalAlignment="Center" />
+                                      Background="Transparent" Opacity="0" Margin="-35,0,0,0"
+                                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" VerticalAlignment="Center"
+                                       Text="{Binding Source={StaticResource Loc}, Path=[KeyboardShortcut]}" />
                         </Grid>
                     </MenuItem.Header>
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE8AC;" FontSize="14" />
                     </MenuItem.Icon>
-                    <!-- Submenu items for keyboard profiles (in code-behind) -->
                 </MenuItem>
 
-                <!-- Mouse Hook -->
                 <MenuItem Name="MouseHookMenu"
                           IsCheckable="False"
                           IsChecked="{Binding Source={x:Static managers:SettingsManager.IsMouseHookActive}, Mode=OneTime}"
-                          ToolTip="启用或禁用鼠标快捷键">
+                          ToolTip="{Binding Source={StaticResource Loc}, Path=[MouseShortcut]}">
                     <MenuItem.Header>
                         <Grid>
                             <CheckBox Command="{Binding RelativeSource={RelativeSource AncestorType=MenuItem}, Path=Command}"
                                       CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=MenuItem}, Path=CommandParameter}"
-                                      Background="Transparent"
-                                      Opacity="0"
-                                      Margin="-35,0,0,0"
-                                      HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Stretch" />
-                            <TextBlock Text="鼠标快捷键" Background="Transparent" IsHitTestVisible="False" VerticalAlignment="Center" />
+                                      Background="Transparent" Opacity="0" Margin="-35,0,0,0"
+                                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                            <TextBlock Background="Transparent" IsHitTestVisible="False" VerticalAlignment="Center"
+                                       Text="{Binding Source={StaticResource Loc}, Path=[MouseShortcut]}" />
                         </Grid>
                     </MenuItem.Header>
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE962;" FontSize="14" />
                     </MenuItem.Icon>
-                    <!-- Submenu items for mouse profiles (in code-behind) -->
                 </MenuItem>
 
-                <!-- Window Hook -->
-                <MenuItem Header="窗口拦截"
-                          Name="WindowHook"
-                          StaysOpenOnClick="True"
-                          IsCheckable="True"
+                <MenuItem Name="WindowHook"
+                          StaysOpenOnClick="True" IsCheckable="True"
                           IsChecked="{Binding Source={x:Static managers:SettingsManager.IsWindowHookActive}, Mode=OneTime}"
-                          ToolTip="切换自动将新资源管理器窗口合并为标签页">
+                          Header="{Binding Source={StaticResource Loc}, Path=[WindowIntercept]}"
+                          ToolTip="{Binding Source={StaticResource Loc}, Path=[StatusWindowHook]}">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE8A7;" FontSize="14" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <!-- Reuse Tabs -->
-                <MenuItem Header="标签复用"
-                          Name="ReuseTabs"
-                          StaysOpenOnClick="True"
-                          IsCheckable="True"
+                <MenuItem Name="ReuseTabs"
+                          StaysOpenOnClick="True" IsCheckable="True"
                           IsChecked="{Binding Source={x:Static managers:SettingsManager.ReuseTabs}, Mode=OneTime}"
-                          ToolTip="启用后导航到现有标签页，而不是打开重复标签页">
+                          Header="{Binding Source={StaticResource Loc}, Path=[TabReuse]}"
+                          ToolTip="{Binding Source={StaticResource Loc}, Path=[TabReuse]}">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE8EE;" FontSize="14" />
                     </MenuItem.Icon>
@@ -84,22 +72,19 @@
 
                 <Separator />
 
-                <!-- Add to startup -->
-                <MenuItem Header="开机自启"
-                          Name="AddToStartup"
-                          StaysOpenOnClick="True"
-                          IsCheckable="True"
+                <MenuItem Name="AddToStartup"
+                          StaysOpenOnClick="True" IsCheckable="True"
                           IsChecked="{Binding Source={x:Static managers:RegistryManager.IsStartupEnabled}, Mode=OneTime}"
-                          ToolTip="Windows 启动时自动运行">
+                          Header="{Binding Source={StaticResource Loc}, Path=[AddToStartup]}"
+                          ToolTip="{Binding Source={StaticResource Loc}, Path=[AddToStartup]}">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE7F4;" FontSize="14" />
                     </MenuItem.Icon>
                 </MenuItem>
 
-                <!-- Settings -->
                 <MenuItem x:Name="OpenSettings"
-                          Header="设置"
-                          ToolTip="打开设置窗口配置应用">
+                          Header="{Binding Source={StaticResource Loc}, Path=[Settings]}"
+                          ToolTip="{Binding Source={StaticResource Loc}, Path=[Settings]}">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE713;" FontSize="14" />
                     </MenuItem.Icon>
@@ -107,10 +92,9 @@
 
                 <Separator />
 
-                <!-- Exit -->
                 <MenuItem x:Name="ExitApplication"
-                          Header="退出"
-                          ToolTip="关闭应用并停止所有拦截">
+                          Header="{Binding Source={StaticResource Loc}, Path=[Exit]}"
+                          ToolTip="{Binding Source={StaticResource Loc}, Path=[Exit]}">
                     <MenuItem.Icon>
                         <TextBlock Text="&#xE7E8;" FontSize="14" Foreground="{StaticResource DangerBrush}" />
                     </MenuItem.Icon>

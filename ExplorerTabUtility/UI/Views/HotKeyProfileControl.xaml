@@ -36,19 +36,20 @@
 
                 <!-- Enabled Toggle -->
                 <ToggleButton x:Name="CbEnabled" Grid.Column="0" Style="{StaticResource ToggleButtonStyle}"
-                              VerticalAlignment="Stretch" ToolTip="Enable or disable this profile" />
+                              VerticalAlignment="Stretch"
+                              ToolTip="{Binding Source={StaticResource Loc}, Path=[ProfileEnabledTooltip]}" />
 
                 <!-- Name -->
                 <TextBox x:Name="TxtName" Grid.Column="1" Tag="Name" Style="{StaticResource CustomTextBoxStyle}"
-                         ToolTip="Name of the profile" />
+                         ToolTip="{Binding Source={StaticResource Loc}, Path=[ProfileNameTooltip]}" />
 
                 <!-- Hotkeys -->
                 <TextBox x:Name="TxtHotKeys" Grid.Column="3" Tag="Hotkeys" Style="{StaticResource CustomTextBoxStyle}"
-                         ToolTip="Keyboard or mouse keys to listen for. Click to record a new key combination." />
+                         ToolTip="{Binding Source={StaticResource Loc}, Path=[HotKeysTooltip]}" />
 
                 <!-- Scope -->
                 <ComboBox x:Name="CbScope" Grid.Column="5" Style="{StaticResource CustomComboBoxStyle}" SelectedValuePath="Value"
-                         ToolTip="快捷键作用域：全局（任意位置）或仅限资源管理器窗口时生效">
+                         ToolTip="{Binding Source={StaticResource Loc}, Path=[ScopeTooltip]}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Display}"/>
@@ -58,7 +59,7 @@
 
                 <!-- Action -->
                 <ComboBox x:Name="CbAction" Grid.Column="6" Style="{StaticResource CustomComboBoxStyle}" Width="150" SelectedValuePath="Value"
-                         ToolTip="快捷键触发时执行的操作">
+                         ToolTip="{Binding Source={StaticResource Loc}, Path=[ActionTooltip]}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Display}"/>
@@ -68,13 +69,12 @@
 
                 <!-- Expander button -->
                 <ToggleButton x:Name="ExpanderToggle" Grid.Column="7" Margin="4, 0" Style="{StaticResource ToggleButtonArrowStyle}"
-                              ToolTip="Show more options" />
+                              ToolTip="{Binding Source={StaticResource Loc}, Path=[ExpanderTooltip]}" />
 
                 <!-- Delete Button -->
-                <Button x:Name="BtnDelete" Grid.Column="8" ToolTip="Delete this profile">
+                <Button x:Name="BtnDelete" Grid.Column="8" ToolTip="{Binding Source={StaticResource Loc}, Path=[DeleteProfileTooltip]}">
                     <Path Data="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"
-                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Uniform" Width="16"
-                          Height="16" />
+                          Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Uniform" Width="16" Height="16" />
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource IconButtonStyle}">
                             <Style.Triggers>
@@ -101,30 +101,28 @@
                 <!-- Path -->
                 <TextBox Grid.Column="0" x:Name="TxtPath" Tag="Location" Style="{StaticResource CustomTextBoxStyle}"
                          ContextMenu="{StaticResource TextBoxCustomContextMenu}"
-                         ToolTip="Path to open when the hotkeys are pressed. (folder, file, website, CLSID)" />
+                         ToolTip="{Binding Source={StaticResource Loc}, Path=[PathTooltip]}" />
 
                 <!-- Delay -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="6"
-                            ToolTip="Delay in milliseconds before performing the action">
-                    <TextBlock Text="Delay" VerticalAlignment="Center" Margin="0,0,6,0" />
+                            ToolTip="{Binding Source={StaticResource Loc}, Path=[DelayTooltip]}">
+                    <TextBlock VerticalAlignment="Center" Margin="0,0,6,0"
+                               Text="{Binding Source={StaticResource Loc}, Path=[Delay]}" />
 
-                    <controls:NumericInputControl x:Name="NDelay"
-                                                  Margin="0"
-                                                  MinWidth="100"
-                                                  Minimum="0"
-                                                  Maximum="10000"
-                                                  Step="100"
-                                                  Suffix="ms"
+                    <controls:NumericInputControl x:Name="NDelay" Margin="0" MinWidth="100"
+                                                  Minimum="0" Maximum="10000" Step="100" Suffix="ms"
                                                   StringFormat="{}{0:N0}" />
                 </StackPanel>
 
                 <!-- Handled -->
-                <ToggleButton Grid.Column="2" x:Name="CbHandled" Content="Handled" Style="{StaticResource ToggleButtonStyle}" Margin="5,0"
-                              ToolTip="Prevent further processing of the hotkeys in other applications" />
+                <ToggleButton Grid.Column="2" x:Name="CbHandled" Style="{StaticResource ToggleButtonStyle}" Margin="5,0"
+                              Content="{Binding Source={StaticResource Loc}, Path=[Handled]}"
+                              ToolTip="{Binding Source={StaticResource Loc}, Path=[HandledTooltip]}" />
 
                 <!-- Open as Tab -->
-                <ToggleButton Grid.Column="3" x:Name="CbOpenAsTab" Content="Tab" Style="{StaticResource ToggleButtonStyle}" Margin="5,0"
-                              ToolTip="Open as tab instead of a new window" />
+                <ToggleButton Grid.Column="3" x:Name="CbOpenAsTab" Style="{StaticResource ToggleButtonStyle}" Margin="5,0"
+                              Content="{Binding Source={StaticResource Loc}, Path=[Tab]}"
+                              ToolTip="{Binding Source={StaticResource Loc}, Path=[TabTooltip]}" />
             </Grid>
         </Grid>
     </Border>

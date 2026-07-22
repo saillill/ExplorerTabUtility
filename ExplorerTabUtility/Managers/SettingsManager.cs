@@ -102,6 +102,8 @@ public static class SettingsManager
     { get => Settings.RestorePreviousWindows; set { Settings.RestorePreviousWindows = value; DebounceSave(); } }
     public static WindowRecord[]? ClosedWindows
     { get => Settings.ClosedWindows; set { Settings.ClosedWindows = value; DebounceSave(); } }
+    public static string Language
+    { get => Settings.Language; set { Settings.Language = value; DebounceSave(); NotifyStaticPropertyChanged(); } }
 
     private static void DebounceSave()
     {
@@ -156,4 +158,5 @@ internal class AppSettings
     public bool SaveClosedWindows { get; set; }
     public bool RestorePreviousWindows { get; set; }
     public WindowRecord[]? ClosedWindows { get; set; }
+    public string Language { get; set; } = "";
 }

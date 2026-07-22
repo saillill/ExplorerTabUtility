@@ -35,14 +35,23 @@ public partial class MainWindow : Window
         SetupEventHandlers();
         StartHooks();
 
-        // Auto-update removed
+        // Theme dropdown
         CbTheme.ItemsSource = new[]
         {
-            new ExplorerTabUtility.Models.DisplayItem<int>("跟随系统", 0),
-            new ExplorerTabUtility.Models.DisplayItem<int>("深色", 1),
-            new ExplorerTabUtility.Models.DisplayItem<int>("浅色", 2),
+            new DisplayItem<int>(LocalizationService.Get("ThemeFollowSystem"), 0),
+            new DisplayItem<int>(LocalizationService.Get("ThemeDark"), 1),
+            new DisplayItem<int>(LocalizationService.Get("ThemeLight"), 2),
         };
         CbTheme.SelectedValue = SettingsManager.ThemeMode;
+
+        // Language dropdown
+        CbLanguage.ItemsSource = new[]
+        {
+            new DisplayItem<string>(LocalizationService.Get("LanguageZh"), "zh-CN"),
+            new DisplayItem<string>(LocalizationService.Get("LanguageEn"), "en"),
+        };
+        CbLanguage.SelectedValue = SettingsManager.Language switch { "zh-CN" => "zh-CN", _ => "en" };
+
         CbThemeIssue.IsChecked = SettingsManager.HaveThemeIssue;
         CbHideTrayIcon.IsChecked = SettingsManager.IsTrayIconHidden;
         CbAutoSaveProfiles.IsChecked = SettingsManager.SaveProfilesOnExit;
@@ -50,7 +59,6 @@ public partial class MainWindow : Window
         CbRestorePreviousWindows.IsChecked = SettingsManager.RestorePreviousWindows;
         UpdateTrayIconVisibility(false);
 
-        
         // Show the window if this is the first run
         if (SettingsManager.IsFirstRun)
         {
@@ -75,6 +83,7 @@ public partial class MainWindow : Window
         CbRestorePreviousWindows.Checked += CbRestorePreviousWindows_CheckedChanged;
         CbRestorePreviousWindows.Unchecked += CbRestorePreviousWindows_CheckedChanged;
         CbTheme.SelectionChanged += CbTheme_SelectionChanged;
+        CbLanguage.SelectionChanged += CbLanguage_SelectionChanged;
         CbThemeIssue.Checked += CbThemeIssue_CheckedChanged;
         CbThemeIssue.Unchecked += CbThemeIssue_CheckedChanged;
         CbHideTrayIcon.Checked += CbHideTrayIcon_CheckedChanged;
@@ -172,9 +181,22 @@ public partial class MainWindow : Window
     private void CbTheme_SelectionChanged(object? _, System.Windows.Controls.SelectionChangedEventArgs __)
     {
         if (CbTheme.SelectedValue is int val)
-        {
             ThemeManager.CurrentTheme = (AppTheme)val;
-        }
+    }
+
+    private void CbLanguage_SelectionChanged(object? _, System.Windows.Controls.SelectionChangedEventArgs __)
+    {
+        if (CbLanguage.SelectedValue is not string lang) return;
+        SettingsManager.Language = lang;
+        LocalizationService.Instance.SetLanguage(lang);
+        // Update theme dropdown (which was created with localized strings)
+        CbTheme.ItemsSource = new[]
+        {
+            new DisplayItem<int>(LocalizationService.Get("ThemeFollowSystem"), 0),
+            new DisplayItem<int>(LocalizationService.Get("ThemeDark"), 1),
+            new DisplayItem<int>(LocalizationService.Get("ThemeLight"), 2),
+        };
+        CbTheme.SelectedValue = SettingsManager.ThemeMode;
     }
 
     private void CbThemeIssue_CheckedChanged(object? _, RoutedEventArgs __)
@@ -196,7 +218,6 @@ public partial class MainWindow : Window
 
     private void UpdateTrayIconVisibility(bool showAlert)
     {
-        // Check for valid toggle visibility profile
         var profile = _profileManager
             .GetProfiles()
             .FirstOrDefault(p =>
@@ -208,8 +229,8 @@ public partial class MainWindow : Window
         if (isChecked && showAlert && !SettingsManager.IsTrayIconHidden)
         {
             var message = canToggleVisibility
-                ? $"You can show the app again by pressing {profile!.HotKeys!.HotKeysToString(profile.IsDoubleClick)}"
-                : "Cannot hide tray icon if no hotkey is configured to toggle visibility.";
+                ? string.Format(LocalizationService.Get("HideWindowAlert1"), profile!.HotKeys!.HotKeysToString(profile.IsDoubleClick))
+                : LocalizationService.Get("HideWindowAlert2");
 
             CustomMessageBox.Show(this, message, Constants.AppName);
         }
@@ -222,7 +243,6 @@ public partial class MainWindow : Window
 
     private void MainWindow_Deactivated(object? _, EventArgs __)
     {
-        // Find the focused HotKeyProfileControl, if any
         foreach (var child in ProfilesPanel.Children)
         {
             if (child is not HotKeyProfileControl control) continue;
@@ -241,24 +261,20 @@ public partial class MainWindow : Window
 
     private void MainWindow_Closing(object? _, System.ComponentModel.CancelEventArgs e)
     {
-        // ALT + F4 / App exit
         e.Cancel = true;
         HideWindow(exit: true);
     }
 
     private void OnApplicationExit(object _, ExitEventArgs __)
     {
-        // Force-save any pending settings changes before shutdown.
         SettingsManager.ForceSave();
-
         _notifyIconManager.Dispose();
         _hookManager.Dispose();
     }
 
     private void TitleBar_MouseLeftButtonDown(object _, MouseButtonEventArgs e)
     {
-        if (e.ButtonState != MouseButtonState.Pressed)
-            return;
+        if (e.ButtonState != MouseButtonState.Pressed) return;
 
         if (e.ClickCount == 2)
         {
@@ -266,7 +282,6 @@ public partial class MainWindow : Window
             return;
         }
 
-        // Handle dragging
         if (WindowState != WindowState.Maximized)
         {
             DragMove();

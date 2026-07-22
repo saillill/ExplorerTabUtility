@@ -30,17 +30,37 @@ public partial class HotKeyProfileControl : UserControl
     }
 
     // Constructor
-    private static string GetEnumDisplay(Enum value)
+    private static readonly Dictionary<HotKeyAction, string> ActionKeys = new()
     {
-        var field = value.GetType().GetField(value.ToString());
-        var attr = field?.GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
-        return attr is { Length: > 0 } ? ((System.ComponentModel.DescriptionAttribute)attr[0]).Description : value.ToString();
-    }
+        [HotKeyAction.Open] = "Action_Open",
+        [HotKeyAction.Duplicate] = "Action_Duplicate",
+        [HotKeyAction.ReopenClosed] = "Action_ReopenClosed",
+        [HotKeyAction.TabSearch] = "Action_TabSearch",
+        [HotKeyAction.NavigateBack] = "Action_NavigateBack",
+        [HotKeyAction.NavigateUp] = "Action_NavigateUp",
+        [HotKeyAction.NavigateForward] = "Action_NavigateForward",
+        [HotKeyAction.SetTargetWindow] = "Action_SetTargetWindow",
+        [HotKeyAction.ToggleWinHook] = "Action_ToggleWinHook",
+        [HotKeyAction.ToggleReuseTabs] = "Action_ToggleReuseTabs",
+        [HotKeyAction.ToggleVisibility] = "Action_ToggleVisibility",
+        [HotKeyAction.DetachTab] = "Action_DetachTab",
+        [HotKeyAction.SnapRight] = "Action_SnapRight",
+        [HotKeyAction.SnapLeft] = "Action_SnapLeft",
+        [HotKeyAction.SnapUp] = "Action_SnapUp",
+        [HotKeyAction.SnapDown] = "Action_SnapDown",
+    };
 
-    private static DisplayItem<Enum>[] ToDisplayItems(Array values)
+    private static readonly Dictionary<HotkeyScope, string> ScopeKeys = new()
     {
-        return values.Cast<Enum>().Select(v => new DisplayItem<Enum>(GetEnumDisplay(v), v)).ToArray();
-    }
+        [HotkeyScope.Global] = "ScopeGlobal",
+        [HotkeyScope.FileExplorer] = "ScopeFileExplorer",
+    };
+
+    private static string GetActionDisplay(HotKeyAction action)
+        => ActionKeys.TryGetValue(action, out var key) ? LocalizationService.Get(key) : action.ToString();
+
+    private static string GetScopeDisplay(HotkeyScope scope)
+        => ScopeKeys.TryGetValue(scope, out var key) ? LocalizationService.Get(key) : scope.ToString();
 
 
     public HotKeyProfileControl(HotKeyProfile profile, Action<HotKeyProfile>? removeAction = null, Action? keybindingHookStarted = null,
@@ -67,11 +87,10 @@ public partial class HotKeyProfileControl : UserControl
             TxtHotKeys.Text = _profile.HotKeys.HotKeysToString(_profile.IsDoubleClick);
 
         // Setup ComboBoxes
-        CbScope.ItemsSource = ToDisplayItems(Enum.GetValues(typeof(HotkeyScope)));
+        CbScope.ItemsSource = Enum.GetValues<HotkeyScope>().Select(s => new DisplayItem<HotkeyScope>(GetScopeDisplay(s), s)).ToArray();
         CbScope.SelectedValue = _profile.Scope;
 
         UpdateActionComboBox();
-        CbAction.ItemsSource = ToDisplayItems(Enum.GetValues(typeof(HotKeyAction)));
         CbAction.SelectedValue = _profile.Action;
 
         TxtPath.Text = _profile.Path ?? string.Empty;
@@ -261,7 +280,7 @@ public partial class HotKeyProfileControl : UserControl
             ? currentAction
             : allowedActions.FirstOrDefault();
 
-        CbAction.ItemsSource = ToDisplayItems(allowedActions);
+        CbAction.ItemsSource = allowedActions.Select(a => new DisplayItem<HotKeyAction>(GetActionDisplay(a), a)).ToArray();
         CbAction.SelectedValue = desiredAction;
     }
 
@@ -308,7 +327,7 @@ public partial class HotKeyProfileControl : UserControl
         // If the name is empty or is an exact match of an action, set it to the hotkey.
         var isExactMatch = Enum.GetNames(typeof(HotKeyAction)).Any(a => a == TxtName.Text);
         if (string.IsNullOrWhiteSpace(TxtName.Text) || isExactMatch)
-            TxtName.Text = GetEnumDisplay(selectedAction);
+            TxtName.Text = GetActionDisplay(selectedAction);
     }
 
     private static HotKeyAction[] GetAllowedActions(HotkeyScope scope)

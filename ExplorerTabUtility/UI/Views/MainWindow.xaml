@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:ExplorerTabUtility.UI.Views"
         xmlns:managers="clr-namespace:ExplorerTabUtility.Managers"
-        Title="Explorer Tab Utility - 文件夹标签合并"
+        Title="{Binding Source={StaticResource Loc}, Path=[AppTitleWithDesc]}"
         Width="850" Height="600"
         MinWidth="700" MinHeight="175"
         AllowsTransparency="True"
@@ -36,13 +36,15 @@
 
                     <!-- Menu Button -->
                     <ToggleButton x:Name="DrawerButton" Grid.Column="0" Style="{StaticResource ToggleButtonIconStyle}" Margin="6,0,0,0"
-                                  Content="&#x2630;" Focusable="False" ToolTip="打开菜单" />
+                                  Content="&#x2630;" Focusable="False"
+                                  ToolTip="{Binding Source={StaticResource Loc}, Path=[MenuOpen]}" />
 
                     <!-- Window Title -->
-                    <TextBlock Grid.Column="1" Text="文件夹标签合并工具" VerticalAlignment="Center" Margin="8,0"
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="8,0"
                                Foreground="{StaticResource TextPrimaryBrush}"
                                FontWeight="SemiBold"
-                               FontSize="14" />
+                               FontSize="14"
+                               Text="{Binding Source={StaticResource Loc}, Path=[AppTitle]}" />
 
                     <!-- Window Controls -->
                     <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -105,14 +107,17 @@
                                         <BeginStoryboard Storyboard="{StaticResource CloseDrawerStoryboard}"/>
                                     </EventTrigger>
                                 </ListBox.Triggers>
-                                <ListBoxItem ToolTip="配置键盘和鼠标快捷键">
-                                    <TextBlock Text="&#x1F5F2;  快捷键" VerticalAlignment="Center" />
+                                <ListBoxItem ToolTip="{Binding Source={StaticResource Loc}, Path=[MenuShortcuts]}">
+                                    <TextBlock VerticalAlignment="Center"
+                                               Text="{Binding Source={StaticResource Loc}, Path=[MenuShortcuts]}" />
                                 </ListBoxItem>
-                                <ListBoxItem ToolTip="配置应用程序设置">
-                                    <TextBlock Text="&#xE713;  偏好设置" VerticalAlignment="Center" />
+                                <ListBoxItem ToolTip="{Binding Source={StaticResource Loc}, Path=[MenuPreferences]}">
+                                    <TextBlock VerticalAlignment="Center"
+                                               Text="{Binding Source={StaticResource Loc}, Path=[MenuPreferences]}" />
                                 </ListBoxItem>
-                                <ListBoxItem ToolTip="关于应用和支持选项">
-                                    <TextBlock Text="&#xE939;  关于" VerticalAlignment="Center" />
+                                <ListBoxItem ToolTip="{Binding Source={StaticResource Loc}, Path=[MenuAbout]}">
+                                    <TextBlock VerticalAlignment="Center"
+                                               Text="{Binding Source={StaticResource Loc}, Path=[MenuAbout]}" />
                                 </ListBoxItem>
                             </ListBox>
                         </DockPanel>
@@ -128,9 +133,8 @@
                                         <DataTrigger.EnterActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2"
-                                                                     BeginTime="0:0:0.1" />
-                                                    <DoubleAnimation Storyboard.TargetProperty="Width" To="165" Duration="0:0:0.3">
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.2" BeginTime="0:0:0.1" />
+                                                    <DoubleAnimation Storyboard.TargetProperty="Width" To="170" Duration="0:0:0.3">
                                                         <DoubleAnimation.EasingFunction>
                                                             <CubicEase EasingMode="EaseOut" />
                                                         </DoubleAnimation.EasingFunction>
@@ -158,15 +162,13 @@
 
                     <!-- Main Content -->
                     <Grid Grid.Column="1">
-                        <!-- Tab Control -->
                         <TabControl Style="{StaticResource CustomTabControlStyle}"
                                     SelectedIndex="{Binding SelectedIndex, ElementName=NavigationList}">
                             <TabControl.Effect>
-                                <DropShadowEffect ShadowDepth="1" BlurRadius="3" Opacity="0.2"
-                                                  Color="{StaticResource ShadowColor}" />
+                                <DropShadowEffect ShadowDepth="1" BlurRadius="3" Opacity="0.2" Color="{StaticResource ShadowColor}" />
                             </TabControl.Effect>
                             <!-- Shortcuts Tab -->
-                            <TabItem Header="快捷键" Visibility="Collapsed">
+                            <TabItem Header="{Binding Source={StaticResource Loc}, Path=[TabShortcuts]}" Visibility="Collapsed">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -175,22 +177,25 @@
 
                                     <!-- Toolbar -->
                                     <DockPanel Grid.Row="0" Margin="16,8" LastChildFill="False">
-                                        <!-- Action Buttons -->
                                         <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                                            <Button x:Name="BtnNewProfile" Content="新建" Style="{StaticResource FlatButtonStyle}"
-                                                    ToolTip="创建新的配置方案" />
-                                            <Button x:Name="BtnImport" Content="导入" Style="{StaticResource FlatButtonStyle}"
-                                                    ToolTip="从文件导入配置" />
-                                            <Button x:Name="BtnExport" Content="导出" Style="{StaticResource FlatButtonStyle}"
-                                                    ToolTip="导出配置到文件" />
-                                            <Button x:Name="BtnSave" Content="保存" Style="{StaticResource FlatButtonStyle}"
-                                                    ToolTip="保存所有配置更改" />
+                                            <Button x:Name="BtnNewProfile" Style="{StaticResource FlatButtonStyle}"
+                                                    Content="{Binding Source={StaticResource Loc}, Path=[BtnNewProfile]}"
+                                                    ToolTip="{Binding Source={StaticResource Loc}, Path=[BtnNewProfile]}" />
+                                            <Button x:Name="BtnImport" Style="{StaticResource FlatButtonStyle}"
+                                                    Content="{Binding Source={StaticResource Loc}, Path=[BtnImport]}"
+                                                    ToolTip="{Binding Source={StaticResource Loc}, Path=[BtnImport]}" />
+                                            <Button x:Name="BtnExport" Style="{StaticResource FlatButtonStyle}"
+                                                    Content="{Binding Source={StaticResource Loc}, Path=[BtnExport]}"
+                                                    ToolTip="{Binding Source={StaticResource Loc}, Path=[BtnExport]}" />
+                                            <Button x:Name="BtnSave" Style="{StaticResource FlatButtonStyle}"
+                                                    Content="{Binding Source={StaticResource Loc}, Path=[BtnSave]}"
+                                                    ToolTip="{Binding Source={StaticResource Loc}, Path=[BtnSave]}" />
                                         </StackPanel>
 
-                                        <!-- Save on Exit Toggle -->
                                         <CheckBox DockPanel.Dock="Right" x:Name="CbAutoSaveProfiles"
-                                                  Content="自动保存" Style="{StaticResource CustomCheckBoxStyle}"
-                                                  ToolTip="关闭窗口时自动保存配置" />
+                                                  Style="{StaticResource CustomCheckBoxStyle}"
+                                                  Content="{Binding Source={StaticResource Loc}, Path=[AutoSave]}"
+                                                  ToolTip="{Binding Source={StaticResource Loc}, Path=[AutoSaveTooltip]}" />
                                     </DockPanel>
 
                                     <!-- Profiles Panel -->
@@ -203,35 +208,42 @@
                             </TabItem>
 
                             <!-- Preferences Tab -->
-                            <TabItem Header="偏好设置" Visibility="Collapsed">
+                            <TabItem Header="{Binding Source={StaticResource Loc}, Path=[TabPreferences]}" Visibility="Collapsed">
                                 <StackPanel Margin="16, 8">
-                                    <GroupBox Header="应用设置"
-                                              Style="{StaticResource CustomGroupBoxStyle}">
+                                    <GroupBox Style="{StaticResource CustomGroupBoxStyle}"
+                                              Header="{Binding Source={StaticResource Loc}, Path=[GroupAppSettings]}">
                                         <StackPanel Margin="8">
                                             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                                <TextBlock Text="主题" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                                <TextBlock VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{StaticResource TextSecondaryBrush}"
+                                                           Text="{Binding Source={StaticResource Loc}, Path=[Theme]}" />
                                                 <ComboBox x:Name="CbTheme" Style="{StaticResource CustomComboBoxStyle}" Width="120"
                                                           SelectedValuePath="Value" DisplayMemberPath="Display"/>
                                             </StackPanel>
-                                            <CheckBox x:Name="CbThemeIssue" Content="我有主题问题"
-                                                      Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="使用替代窗口隐藏方法以保留自定义主题。&#x0a;如有主题相关问题请启用此选项" />
-                                            <CheckBox x:Name="CbSaveClosedHistory" Content="保存关闭历史"
-                                                      Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="保存已关闭窗口的历史记录，以便稍后重新打开" />
-                                            <CheckBox x:Name="CbRestorePreviousWindows" Content="恢复之前的窗口"
-                                                      Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="重启或崩溃后恢复之前打开的窗口" />
-                                            <CheckBox x:Name="CbHideTrayIcon" Content="隐藏托盘图标"
-                                                      Style="{StaticResource CustomCheckBoxStyle}"
-                                                      ToolTip="隐藏系统托盘图标" />
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                                <TextBlock VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{StaticResource TextSecondaryBrush}"
+                                                           Text="{Binding Source={StaticResource Loc}, Path=[Language]}" />
+                                                <ComboBox x:Name="CbLanguage" Style="{StaticResource CustomComboBoxStyle}" Width="100"
+                                                          SelectedValuePath="Value" DisplayMemberPath="Display"/>
+                                            </StackPanel>
+                                            <CheckBox x:Name="CbThemeIssue" Style="{StaticResource CustomCheckBoxStyle}"
+                                                      Content="{Binding Source={StaticResource Loc}, Path=[ThemeCompatibilityMode]}"
+                                                      ToolTip="{Binding Source={StaticResource Loc}, Path=[ThemeCompatibilityTooltip]}" />
+                                            <CheckBox x:Name="CbSaveClosedHistory" Style="{StaticResource CustomCheckBoxStyle}"
+                                                      Content="{Binding Source={StaticResource Loc}, Path=[SaveClosedHistory]}"
+                                                      ToolTip="{Binding Source={StaticResource Loc}, Path=[SaveClosedHistoryTooltip]}" />
+                                            <CheckBox x:Name="CbRestorePreviousWindows" Style="{StaticResource CustomCheckBoxStyle}"
+                                                      Content="{Binding Source={StaticResource Loc}, Path=[RestorePreviousWindows]}"
+                                                      ToolTip="{Binding Source={StaticResource Loc}, Path=[RestorePreviousWindowsTooltip]}" />
+                                            <CheckBox x:Name="CbHideTrayIcon" Style="{StaticResource CustomCheckBoxStyle}"
+                                                      Content="{Binding Source={StaticResource Loc}, Path=[HideTrayIcon]}"
+                                                      ToolTip="{Binding Source={StaticResource Loc}, Path=[HideTrayIconTooltip]}" />
                                         </StackPanel>
                                     </GroupBox>
                                 </StackPanel>
                             </TabItem>
 
                             <!-- About Tab -->
-                            <TabItem Header="关于" Visibility="Collapsed">
+                            <TabItem Header="{Binding Source={StaticResource Loc}, Path=[TabAbout]}" Visibility="Collapsed">
                                 <local:AboutView />
                             </TabItem>
                         </TabControl>
@@ -242,8 +254,7 @@
             <!-- Status Bar -->
             <Border Grid.Row="2" Background="{StaticResource ControlBackgroundBrush}" BorderBrush="{StaticResource BorderBrush}"
                     BorderThickness="0,1,0,0" CornerRadius="0,0,4,4">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="8,4">
-                        <!-- Window Hook Status -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,4">
                         <StackPanel Orientation="Horizontal" Margin="8,0">
                             <Ellipse Width="12" Height="12" Margin="0,0,6,0" StrokeThickness="1">
                                 <Ellipse.Style>
@@ -255,8 +266,7 @@
                                                 <Setter Property="Fill" Value="{StaticResource StatusActiveBrush}" />
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8"
-                                                                          Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
+                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -264,10 +274,9 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Text="窗口拦截" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"
+                                       Text="{Binding Source={StaticResource Loc}, Path=[StatusWindowHook]}" />
                         </StackPanel>
-
-                        <!-- Reuse Tabs Status -->
                         <StackPanel Orientation="Horizontal" Margin="8,0">
                             <Ellipse Width="12" Height="12" Margin="0,0,6,0" StrokeThickness="1">
                                 <Ellipse.Style>
@@ -279,8 +288,7 @@
                                                 <Setter Property="Fill" Value="{StaticResource StatusActiveBrush}" />
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8"
-                                                                          Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
+                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -288,10 +296,9 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Text="标签复用" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"
+                                       Text="{Binding Source={StaticResource Loc}, Path=[StatusReuseTabs]}" />
                         </StackPanel>
-
-                        <!-- Keyboard Hook Status -->
                         <StackPanel Orientation="Horizontal" Margin="8,0">
                             <Ellipse Width="12" Height="12" Margin="0,0,6,0" StrokeThickness="1">
                                 <Ellipse.Style>
@@ -303,8 +310,7 @@
                                                 <Setter Property="Fill" Value="{StaticResource StatusActiveBrush}" />
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8"
-                                                                          Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
+                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -312,10 +318,9 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Text="键盘快捷键" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"
+                                       Text="{Binding Source={StaticResource Loc}, Path=[StatusKeyboardHook]}" />
                         </StackPanel>
-
-                        <!-- Mouse Hook Status -->
                         <StackPanel Orientation="Horizontal" Margin="8,0">
                             <Ellipse Width="12" Height="12" Margin="0,0,6,0" StrokeThickness="1">
                                 <Ellipse.Style>
@@ -327,8 +332,7 @@
                                                 <Setter Property="Fill" Value="{StaticResource StatusActiveBrush}" />
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8"
-                                                                          Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
+                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -336,7 +340,8 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Text="鼠标快捷键" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                            <TextBlock Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"
+                                       Text="{Binding Source={StaticResource Loc}, Path=[StatusMouseHook]}" />
                         </StackPanel>
                     </StackPanel>
             </Border>

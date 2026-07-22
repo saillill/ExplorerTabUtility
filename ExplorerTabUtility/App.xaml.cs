@@ -22,6 +22,14 @@ public partial class App : Application
             base.OnStartup(e);
             SetupTooltipBehavior();
 
+            // Initialize language from settings
+            var lang = Managers.SettingsManager.Language;
+            if (!string.IsNullOrEmpty(lang))
+                LocalizationService.Instance.SetLanguage(lang);
+
+            // Register for XAML bindings
+            Application.Current.Resources["Loc"] = LocalizationService.Instance;
+
             ThemeManager.Initialize();
             Application.Current.Resources.MergedDictionaries.Add(
                 new System.Windows.ResourceDictionary { Source = new Uri($"pack://application:,,,/ExplorerTabUtility;component/UI/Themes/{ThemeManager.GetColorsFile()}") });
