@@ -19,6 +19,7 @@ public class LocalizationService : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
+    public static event Action? LanguageChanged;
 
     public string this[string key] => _resourceManager.GetString(key, CultureInfo.CurrentUICulture) ?? key;
 
@@ -34,6 +35,7 @@ public class LocalizationService : INotifyPropertyChanged
             CultureInfo.CurrentCulture = culture;
             OnPropertyChanged("Item[]");
             OnPropertyChanged("");
+            LanguageChanged?.Invoke();
         }
     }
 

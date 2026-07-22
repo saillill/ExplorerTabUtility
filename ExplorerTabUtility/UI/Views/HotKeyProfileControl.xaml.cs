@@ -77,6 +77,18 @@ public partial class HotKeyProfileControl : UserControl
         SetupEventHandlers();
     }
 
+    public void RefreshLocalization()
+    {
+        // Rebuild scope ComboBox with current language
+        CbScope.ItemsSource = Enum.GetValues<HotkeyScope>().Select(s => new DisplayItem<HotkeyScope>(GetScopeDisplay(s), s)).ToArray();
+        CbScope.SelectedValue = _profile.Scope;
+
+        // Rebuild action ComboBox with current language
+        var allowedActions = GetAllowedActions(_profile.Scope);
+        CbAction.ItemsSource = allowedActions.Select(a => new DisplayItem<HotKeyAction>(GetActionDisplay(a), a)).ToArray();
+        CbAction.SelectedValue = _profile.Action;
+    }
+
     // Initialize controls with hot key profile data
     private void InitializeControls()
     {

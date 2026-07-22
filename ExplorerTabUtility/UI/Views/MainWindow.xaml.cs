@@ -189,7 +189,7 @@ public partial class MainWindow : Window
         if (CbLanguage.SelectedValue is not string lang) return;
         SettingsManager.Language = lang;
         LocalizationService.Instance.SetLanguage(lang);
-        // Update theme dropdown (which was created with localized strings)
+        // Update theme dropdown
         CbTheme.ItemsSource = new[]
         {
             new DisplayItem<int>(LocalizationService.Get("ThemeFollowSystem"), 0),
@@ -197,6 +197,12 @@ public partial class MainWindow : Window
             new DisplayItem<int>(LocalizationService.Get("ThemeLight"), 2),
         };
         CbTheme.SelectedValue = SettingsManager.ThemeMode;
+        // Refresh all profile controls' ComboBox items
+        foreach (var child in ProfilesPanel.Children)
+        {
+            if (child is HotKeyProfileControl profileControl)
+                profileControl.RefreshLocalization();
+        }
     }
 
     private void CbThemeIssue_CheckedChanged(object? _, RoutedEventArgs __)
