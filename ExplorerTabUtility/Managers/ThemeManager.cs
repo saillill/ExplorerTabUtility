@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Windows;
 using Microsoft.Win32;
 
@@ -13,6 +12,8 @@ public static class ThemeManager
     private const string AppsUseLightTheme = "AppsUseLightTheme";
     private const string ColorsDarkPath = "pack://application:,,,/ExplorerTabUtility;component/UI/Themes/Colors.Dark.xaml";
     private const string ColorsLightPath = "pack://application:,,,/ExplorerTabUtility;component/UI/Themes/Colors.Light.xaml";
+
+    private static ResourceDictionary? _currentThemeDict;
 
     public static AppTheme CurrentTheme
     {
@@ -37,25 +38,18 @@ public static class ThemeManager
     public static void ApplyTheme()
     {
         var dictionaries = Application.Current.Resources.MergedDictionaries;
-        var colorsUri = GetColorsUri();
 
-        // Remove old Colors dictionary (Dark or Light)
-        var oldDark = dictionaries.FirstOrDefault(d =>
-            d.Source?.OriginalString == ColorsDarkPath);
-        var oldLight = dictionaries.FirstOrDefault(d =>
-            d.Source?.OriginalString == ColorsLightPath);
-
-        if (oldDark != null) dictionaries.Remove(oldDark);
-        if (oldLight != null) dictionaries.Remove(oldLight);
+        // Remove previously added theme dictionary (by reference, more reliable than URI matching)
+        if (_currentThemeDict != null)
+        {
+            dictionaries.Remove(_currentThemeDict);
+            _currentThemeDict = null;
+        }
 
         // Add new Colors dictionary — DynamicResource bindings auto-update
-        dictionaries.Add(new ResourceDictionary { Source = new Uri(colorsUri) });
-    }
-
-    public static string GetColorsFile()
-    {
-        var uri = GetColorsUri();
-        return uri == ColorsDarkPath ? "Colors.Dark.xaml" : "Colors.Light.xaml";
+        var newDict = new ResourceDictionary { Source = new Uri(GetColorsUri()) };
+        dictionaries.Add(newDict);
+        _currentThemeDict = newDict;
     }
 
     private static string GetColorsUri()
