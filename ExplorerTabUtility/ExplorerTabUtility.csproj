@@ -13,8 +13,8 @@
         <Company>$(AssemblyName)</Company>
         <Description>Explorer Tab Utility 修复版 — 基于 w4po/ExplorerTabUtility，修复问题，添加中文界面和主题切换</Description>
         <Copyright>Copyright © 2025 saillill</Copyright>
-        <PackageProjectUrl>https://github.com/saillill/ExplorerTabUtility</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/saillill/ExplorerTabUtility</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/saillill/ExplorerTabUtility-fixed-version</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/saillill/ExplorerTabUtility-fixed-version</RepositoryUrl>
         <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>

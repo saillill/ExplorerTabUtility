@@ -162,7 +162,7 @@ Say goodbye to cluttered desktops with multiple Explorer windows! Explorer Tab U
 
 ## 🚀 Getting Started
 
-1. Download the latest version from the [Releases](https://github.com/saillill/ExplorerTabUtility/releases) page.
+1. Download the latest version from the [Releases](https://github.com/saillill/ExplorerTabUtility-fixed-version/releases) page.
 2. Run the application
 3. Look for the tray icon and you're ready to go!
 
