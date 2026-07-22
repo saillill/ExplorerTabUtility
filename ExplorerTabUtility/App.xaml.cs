@@ -31,7 +31,8 @@ public partial class App : Application
             Application.Current.Resources["Loc"] = LocalizationService.Instance;
 
             ThemeManager.Initialize();
-            ThemeManager.ApplyTheme();
+            Application.Current.Resources.MergedDictionaries.Add(
+                new ResourceDictionary { Source = new Uri($"pack://application:,,,/ExplorerTabUtility;component/UI/Themes/{ThemeManager.GetColorsFile()}") });
             _ = new MainWindow();
             return;
         }
@@ -45,6 +46,13 @@ public partial class App : Application
     {
         _mutex?.Dispose();
         base.OnExit(e);
+    }
+
+    /// <summary>Release single-instance mutex before restarting (theme/language change).</summary>
+    public void ReleaseMutex()
+    {
+        _mutex?.Dispose();
+        _mutex = null;
     }
 
     private static void SetupTooltipBehavior()

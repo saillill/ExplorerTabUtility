@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows;
 using Microsoft.Win32;
 
@@ -10,10 +11,6 @@ public static class ThemeManager
 {
     private const string ThemeKey = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
     private const string AppsUseLightTheme = "AppsUseLightTheme";
-    private const string ColorsDarkPath = "pack://application:,,,/ExplorerTabUtility;component/UI/Themes/Colors.Dark.xaml";
-    private const string ColorsLightPath = "pack://application:,,,/ExplorerTabUtility;component/UI/Themes/Colors.Light.xaml";
-
-    private static ResourceDictionary? _currentThemeDict;
 
     public static AppTheme CurrentTheme
     {
@@ -22,7 +19,8 @@ public static class ThemeManager
         {
             if ((int)value == SettingsManager.ThemeMode) return;
             SettingsManager.ThemeMode = (int)value;
-            ApplyTheme();
+            // Require restart: loaded theme colors are StaticResource-based
+            Restart();
         }
     }
 
@@ -31,36 +29,24 @@ public static class ThemeManager
         SystemEvents.UserPreferenceChanged += (s, e) =>
         {
             if (e.Category == UserPreferenceCategory.General && CurrentTheme == AppTheme.System)
-                ApplyTheme();
+                Restart();
         };
     }
 
-    public static void ApplyTheme()
+    /// <summary>Called once at startup to load the correct theme file.</summary>
+    public static string GetColorsFile()
     {
-        var dictionaries = Application.Current.Resources.MergedDictionaries;
-
-        // Remove previously added theme dictionary (by reference, more reliable than URI matching)
-        if (_currentThemeDict != null)
-        {
-            dictionaries.Remove(_currentThemeDict);
-            _currentThemeDict = null;
-        }
-
-        // Add new Colors dictionary — DynamicResource bindings auto-update
-        var newDict = new ResourceDictionary { Source = new Uri(GetColorsUri()) };
-        dictionaries.Add(newDict);
-        _currentThemeDict = newDict;
+        return UseDark() ? "Colors.Dark.xaml" : "Colors.Light.xaml";
     }
 
-    private static string GetColorsUri()
+    private static bool UseDark()
     {
-        bool useDark = CurrentTheme switch
+        return CurrentTheme switch
         {
             AppTheme.Light => false,
             AppTheme.Dark => true,
             _ => !IsSystemLightTheme()
         };
-        return useDark ? ColorsDarkPath : ColorsLightPath;
     }
 
     private static bool IsSystemLightTheme()
@@ -71,5 +57,20 @@ public static class ThemeManager
             return key?.GetValue(AppsUseLightTheme) is not 0;
         }
         catch { return true; }
+    }
+
+    private static void Restart()
+    {
+        SettingsManager.ForceSave();
+        var exe = Process.GetCurrentProcess().MainModule?.FileName;
+        if (exe != null)
+        {
+            // Release mutex before starting new process
+            if (Application.Current is App app)
+                app.ReleaseMutex();
+
+            Process.Start(exe);
+            Application.Current.Shutdown();
+        }
     }
 }
