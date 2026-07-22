@@ -8,11 +8,11 @@
 #define DashPos Pos("-", MyAppVersionWithoutV)
 #define MyAppNumericVersion (DashPos > 0) ? Copy(MyAppVersionWithoutV, 1, DashPos - 1) : MyAppVersionWithoutV
 
-#define MyAppPublisher "w4po"
+#define MyAppPublisher "saillill"
 #define MyAppName "ExplorerTabUtility"
 #define MyAppExeName MyAppName + ".exe"
 #define MyAppRelativePath MyAppName + "\" + MyAppExeName
-#define MyAppURL "https://github.com/w4po/ExplorerTabUtility"
+#define MyAppURL "https://github.com/saillill/ExplorerTabUtility"
 #define DotNet9InstallerUrl "https://download.visualstudio.microsoft.com/download/pr/63f0335a-6012-4017-845f-5d655d56a44f/f8d5150469889387a1de578d45415201/windowsdesktop-runtime-9.0.3-win-x64.exe"
 #define DotNet9InstallerUrlX86 "https://download.visualstudio.microsoft.com/download/pr/48649e20-00b9-43d4-95df-112b80ff7d4e/5652d3ca690f5dc13bbb93ec816c763c/windowsdesktop-runtime-9.0.3-win-x86.exe"
 #define DotNet9InstallerUrlArm64 "https://download.visualstudio.microsoft.com/download/pr/b2f2a05c-c22b-4409-b41e-5f32aaa119a8/71171816b6261ddf0050b3b9172a75ce/windowsdesktop-runtime-9.0.3-win-arm64.exe"
@@ -67,14 +67,9 @@ Name: "startupicon"; Description: "Start with Windows"; GroupDescription: "Windo
 Source: "..\LICENSE"; DestDir: "{app}"; Flags: ignoreversion
 
 ; .NET 9.0 Framework-dependent packages
-Source: "{#SourceDir}\{#MyAppName}_{#MyAppVersion}_x86_Net9.0_FrameworkDependent.zip"; DestDir: "{app}"; Flags: ignoreversion; Check: IsX86AndDotNet9Available
-Source: "{#SourceDir}\{#MyAppName}_{#MyAppVersion}_x64_Net9.0_FrameworkDependent.zip"; DestDir: "{app}"; Flags: ignoreversion; Check: IsX64AndDotNet9Available
-Source: "{#SourceDir}\{#MyAppName}_{#MyAppVersion}_arm64_Net9.0_FrameworkDependent.zip"; DestDir: "{app}"; Flags: ignoreversion; Check: IsArm64AndDotNet9Available
-
-; .NET Framework 4.8.1 packages
-Source: "{#SourceDir}\{#MyAppName}_{#MyAppVersion}_x86_NetFW4.8.1.zip"; DestDir: "{app}"; Flags: ignoreversion; Check: IsX86AndDotNet9NotAvailable
-Source: "{#SourceDir}\{#MyAppName}_{#MyAppVersion}_x64_NetFW4.8.1.zip"; DestDir: "{app}"; Flags: ignoreversion; Check: IsX64AndDotNet9NotAvailable
-Source: "{#SourceDir}\{#MyAppName}_{#MyAppVersion}_arm64_NetFW4.8.1.zip"; DestDir: "{app}"; Flags: ignoreversion; Check: IsArm64AndDotNet9NotAvailable
+	Source: "{#SourceDir}\{#MyAppName}_{#MyAppVersion}_x86_Net9.0_FrameworkDependent.zip"; DestDir: "{app}"; Flags: ignoreversion; Check: IsX86
+	Source: "{#SourceDir}\{#MyAppName}_{#MyAppVersion}_x64_Net9.0_FrameworkDependent.zip"; DestDir: "{app}"; Flags: ignoreversion; Check: IsX64
+	Source: "{#SourceDir}\{#MyAppName}_{#MyAppVersion}_arm64_Net9.0_FrameworkDependent.zip"; DestDir: "{app}"; Flags: ignoreversion; Check: IsArm64
 
 [Dirs]
 ; Create app directory with uninstall flag to ensure it's removed on uninstall
@@ -203,38 +198,6 @@ end;
 //------------------------------------------------------------------------------
 // File selection check functions
 //------------------------------------------------------------------------------
-
-// .NET 9 package selection checks
-function IsX86AndDotNet9Available: Boolean;
-begin
-  Result := IsX86 and UseDotNet9;
-end;
-
-function IsX64AndDotNet9Available: Boolean;
-begin
-  Result := IsX64 and UseDotNet9;
-end;
-
-function IsArm64AndDotNet9Available: Boolean;
-begin
-  Result := IsArm64 and UseDotNet9;
-end;
-
-// .NET Framework 4.8.1 package selection checks
-function IsX86AndDotNet9NotAvailable: Boolean;
-begin
-  Result := IsX86 and not UseDotNet9;
-end;
-
-function IsX64AndDotNet9NotAvailable: Boolean;
-begin
-  Result := IsX64 and not UseDotNet9;
-end;
-
-function IsArm64AndDotNet9NotAvailable: Boolean;
-begin
-  Result := IsArm64 and not UseDotNet9;
-end;
 
 //------------------------------------------------------------------------------
 // Download and installation functions

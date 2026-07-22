@@ -9,12 +9,12 @@
         <Version>2.5.0-fixed</Version>
         <LangVersion>latest</LangVersion>
         <Title>Explorer Tab Utility</Title>
-        <Authors>w4po</Authors>
+        <Authors>saillill</Authors>
         <Company>$(AssemblyName)</Company>
-        <Description>Explorer Tab Utility: Force new windows to tabs. Streamline navigation!</Description>
-        <Copyright>Copyright © 2025 w4po</Copyright>
-        <PackageProjectUrl>https://github.com/w4po/ExplorerTabUtility</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/w4po/ExplorerTabUtility</RepositoryUrl>
+        <Description>Explorer Tab Utility — 文件夹标签合并工具：强制新窗口以标签页打开，中文界面</Description>
+        <Copyright>Copyright © 2025 saillill</Copyright>
+        <PackageProjectUrl>https://github.com/saillill/ExplorerTabUtility</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/saillill/ExplorerTabUtility</RepositoryUrl>
         <SatelliteResourceLanguages>none</SatelliteResourceLanguages>
         <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
