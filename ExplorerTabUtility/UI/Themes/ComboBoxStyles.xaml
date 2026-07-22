@@ -22,7 +22,7 @@
                             CornerRadius="2"
                             Padding="{TemplateBinding Padding}">
                         <ContentPresenter TextElement.Foreground="{DynamicResource TextPrimaryBrush}"
-                                          ToolTip="{Binding Converter={DynamicResource EnumDescriptionConverter}}" />
+                                          ToolTip="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
