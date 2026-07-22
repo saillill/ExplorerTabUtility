@@ -5,7 +5,7 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral</value></resheader>
   <data name="AppTitle" xml:space="preserve"><value>Explorer Tab Utility</value></data>
-  <data name="AppTitleWithDesc" xml:space="preserve"><value>Explorer Tab Utility - Folder Tab Manager</value></data>
+  <data name="AppTitleWithDesc" xml:space="preserve"><value>Explorer Tab Utility 修复版</value></data>
   <data name="AppDescription" xml:space="preserve"><value>Enhance Windows File Explorer experience</value></data>
   <data name="MenuShortcuts" xml:space="preserve"><value>⌨  Shortcuts</value></data>
   <data name="MenuPreferences" xml:space="preserve"><value>⚙  Preferences</value></data>

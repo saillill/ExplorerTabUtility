@@ -1,19 +1,13 @@
-# Explorer Tab Utility
+# Explorer Tab Utility 修复版
 
-> 这是 [w4po/ExplorerTabUtility](https://github.com/w4po/ExplorerTabUtility) 的中文增强复刻版。保留原版全部功能，新增中文界面和深色/浅色主题。
+基于 [w4po/ExplorerTabUtility](https://github.com/w4po/ExplorerTabUtility)，修复了一些问题，添加了中文界面和主题切换。
 
-> This is a Chinese-enhanced fork of [w4po/ExplorerTabUtility](https://github.com/w4po/ExplorerTabUtility). All original features preserved, plus Chinese UI and light/dark themes.
+### 与原版的区别
 
-### 🆚 对比原版的变化 / Changes from Original
-
-| | 原版 Original | 这个版本 This Fork |
-|------|:--:|:--:|
-| 🌐 中文界面 | ❌ 仅英文 | ✅ 完整中文界面 |
-| 🌓 主题切换 | ❌ 仅深色 | ✅ 深色/浅色/跟随系统 |
-| 💬 语言切换 | ❌ | ✅ 中英一键切换 |
-| 🔤 中文字体 | ❌ 默认 | ✅ 微软雅黑优化 |
-
-**其他改进 / Other improvements：** 防抖保存防损坏 · COM 互操作优化 · 快捷键中文提示 · 仅支持 .NET 9.0
+- **中文界面** — 全部菜单、设置、提示翻译为中文，支持中英切换
+- **主题切换** — 支持深色、浅色、跟随系统
+- **设置保护** — 修复配置文件损坏问题，加入自动备份
+- **仅 .NET 9.0** — 不再支持 .NET Framework 4.8.1
 
 ---
 

@@ -5,7 +5,7 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral</value></resheader>
   <data name="AppTitle" xml:space="preserve"><value>Explorer Tab Utility</value></data>
-  <data name="AppTitleWithDesc" xml:space="preserve"><value>Explorer Tab Utility - 文件夹标签合并工具</value></data>
+  <data name="AppTitleWithDesc" xml:space="preserve"><value>Explorer Tab Utility 修复版</value></data>
   <data name="AppDescription" xml:space="preserve"><value>增强 Windows 文件资源管理器体验</value></data>
   <data name="MenuShortcuts" xml:space="preserve"><value>⌨  快捷键</value></data>
   <data name="MenuPreferences" xml:space="preserve"><value>⚙  偏好设置</value></data>
