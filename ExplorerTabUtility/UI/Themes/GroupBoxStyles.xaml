@@ -3,11 +3,11 @@
 
     <!-- GroupBox Style -->
     <Style x:Key="CustomGroupBoxStyle" TargetType="GroupBox">
-        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="8, 4" />
         <Setter Property="Margin" Value="0,0,0,12" />
-        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupBox}">
@@ -53,7 +53,7 @@
                                     <DrawingBrush Viewport="0,0,4,4" ViewportUnits="Absolute" TileMode="Tile">
                                         <DrawingBrush.Drawing>
                                             <DrawingGroup>
-                                                <GeometryDrawing Brush="{StaticResource BorderBrush}">
+                                                <GeometryDrawing Brush="{DynamicResource BorderBrush}">
                                                     <GeometryDrawing.Geometry>
                                                         <GeometryGroup>
                                                             <RectangleGeometry Rect="0,0,50,50" />

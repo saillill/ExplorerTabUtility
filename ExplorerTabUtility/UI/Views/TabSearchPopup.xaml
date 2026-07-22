@@ -42,7 +42,7 @@
                                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
                                            Text="&#xE2B4;"
                                            FontSize="22"
-                                           Foreground="{StaticResource PrimaryLightBrush}"
+                                           Foreground="{DynamicResource PrimaryLightBrush}"
                                            VerticalAlignment="Center"
                                            Margin="0,0,12,0" />
 
@@ -50,24 +50,24 @@
                                 <TextBlock Grid.Row="0" Grid.Column="1"
                                            Text="{Binding Name}"
                                            FontWeight="Normal"
-                                           Foreground="{StaticResource TextAccentBrush}"
+                                           Foreground="{DynamicResource TextAccentBrush}"
                                            TextTrimming="CharacterEllipsis" />
 
                                 <!-- Path -->
                                 <TextBlock Grid.Row="1" Grid.Column="1"
                                            Text="{Binding DisplayLocation}"
                                            FontSize="12"
-                                           Foreground="{StaticResource TextTertiaryBrush}"
+                                           Foreground="{DynamicResource TextTertiaryBrush}"
                                            TextTrimming="CharacterEllipsis" />
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="{StaticResource DropdownBackgroundBrush}" />
-                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource BorderGradientBrush}" />
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource DropdownBackgroundBrush}" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource BorderGradientBrush}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -78,11 +78,11 @@
 
     <Border CornerRadius="8"
             BorderThickness="1"
-            BorderBrush="{StaticResource BorderGradientBrush}"
-            Background="{StaticResource BackgroundGradientBrush}"
+            BorderBrush="{DynamicResource BorderGradientBrush}"
+            Background="{DynamicResource BackgroundGradientBrush}"
             MouseLeftButtonDown="DragHandle_MouseLeftButtonDown">
         <Border.Effect>
-            <DropShadowEffect Color="{StaticResource ShadowColor}"
+            <DropShadowEffect Color="{DynamicResource ShadowColor}"
                               Direction="270"
                               ShadowDepth="5"
                               BlurRadius="15"
@@ -104,8 +104,8 @@
 
                 <!-- Search Box -->
                 <Border Grid.Column="0"
-                        Background="{StaticResource ControlBackgroundBrush}"
-                        BorderBrush="{StaticResource BorderBrush}"
+                        Background="{DynamicResource ControlBackgroundBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}"
                         BorderThickness="1"
                         CornerRadius="4">
                     <Grid>
@@ -116,7 +116,7 @@
 
                         <TextBlock Grid.Column="0"
                                    Text="&#xE11A;"
-                                   Foreground="{StaticResource BorderGradientBrush}"
+                                   Foreground="{DynamicResource BorderGradientBrush}"
                                    Margin="12,5,8,0"
                                    VerticalAlignment="Center" />
 
@@ -127,11 +127,11 @@
                                  BorderThickness="0"
                                  FocusVisualStyle="{x:Null}"
                                  Background="Transparent"
-                                 Foreground="{StaticResource AccentBrush}"
+                                 Foreground="{DynamicResource AccentBrush}"
                                  FontFamily="{StaticResource DefaultFontFamily}"
                                  FontSize="{StaticResource DefaultFontSize}"
                                  ContextMenu="{StaticResource TextBoxCustomContextMenu}"
-                                 CaretBrush="{StaticResource AccentBrush}"
+                                 CaretBrush="{DynamicResource AccentBrush}"
                                  TextChanged="SearchBox_TextChanged"
                                  PreviewKeyDown="SearchBox_PreviewKeyDown" />
                     </Grid>
@@ -148,7 +148,7 @@
                         <Style TargetType="Button" BasedOn="{StaticResource IconButtonStyle}">
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

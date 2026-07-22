@@ -31,8 +31,7 @@ public partial class App : Application
             Application.Current.Resources["Loc"] = LocalizationService.Instance;
 
             ThemeManager.Initialize();
-            Application.Current.Resources.MergedDictionaries.Add(
-                new System.Windows.ResourceDictionary { Source = new Uri($"pack://application:,,,/ExplorerTabUtility;component/UI/Themes/{ThemeManager.GetColorsFile()}") });
+            ThemeManager.ApplyTheme();
             _ = new MainWindow();
             return;
         }

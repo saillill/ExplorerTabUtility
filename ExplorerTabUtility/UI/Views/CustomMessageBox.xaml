@@ -17,7 +17,7 @@
             <Setter Property="MinHeight" Value="30" />
             <Setter Property="Margin" Value="5,0" />
             <Setter Property="Padding" Value="15,5" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Cursor" Value="Hand" />
@@ -26,13 +26,13 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="ButtonBorder"
-                                Background="{StaticResource ControlBackgroundBrush}"
-                                BorderBrush="{StaticResource BorderGradientBrush}"
+                                Background="{DynamicResource ControlBackgroundBrush}"
+                                BorderBrush="{DynamicResource BorderGradientBrush}"
                                 BorderThickness="1"
                                 CornerRadius="4"
                                 Padding="{TemplateBinding Padding}">
                             <Border.Effect>
-                                <DropShadowEffect Color="{StaticResource ShadowColor}"
+                                <DropShadowEffect Color="{DynamicResource ShadowColor}"
                                                   BlurRadius="5"
                                                   ShadowDepth="2"
                                                   Opacity="0.2"
@@ -43,14 +43,14 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource ControlHoverBrush}" />
-                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource PrimaryLightBrush}" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource PrimaryLightBrush}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource PrimaryBrush}" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource PrimaryBrush}" />
                             </Trigger>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{StaticResource PrimaryLightBrush}" />
+                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource PrimaryLightBrush}" />
                                 <Setter TargetName="ButtonBorder" Property="BorderThickness" Value="1.5" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
@@ -63,12 +63,12 @@
         </Style>
     </Window.Resources>
 
-    <Border Background="{StaticResource CardGradientBrush}"
-            BorderBrush="{StaticResource BorderGradientBrush}"
+    <Border Background="{DynamicResource CardGradientBrush}"
+            BorderBrush="{DynamicResource BorderGradientBrush}"
             BorderThickness="1"
             CornerRadius="8">
         <Border.Effect>
-            <DropShadowEffect Color="{StaticResource ShadowColor}"
+            <DropShadowEffect Color="{DynamicResource ShadowColor}"
                               BlurRadius="15"
                               ShadowDepth="5"
                               Opacity="0.4"
@@ -83,12 +83,12 @@
 
             <!-- Title Bar -->
             <Border Grid.Row="0"
-                    Background="{StaticResource TitleBarBrush}"
+                    Background="{DynamicResource TitleBarBrush}"
                     CornerRadius="8,8,0,0"
                     MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
                 <TextBlock x:Name="WindowTitle"
                            Text="{Binding Title, RelativeSource={RelativeSource AncestorType=Window}}"
-                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Foreground="{DynamicResource TextPrimaryBrush}"
                            FontWeight="SemiBold"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"
@@ -115,7 +115,7 @@
                 <!-- Message -->
                 <TextBlock Grid.Column="1"
                            x:Name="MessageText"
-                           Foreground="{StaticResource TextPrimaryBrush}"
+                           Foreground="{DynamicResource TextPrimaryBrush}"
                            TextWrapping="Wrap"
                            MaxWidth="400"
                            TextAlignment="Left"

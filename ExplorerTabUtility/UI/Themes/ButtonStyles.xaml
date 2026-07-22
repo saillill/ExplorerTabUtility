@@ -5,7 +5,7 @@
     <!-- IconButton Styles -->
     <Style x:Key="IconButtonStyle" TargetType="ButtonBase">
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="25" />
         <Setter Property="Height" Value="25" />
@@ -30,13 +30,13 @@
                 <Setter Property="Opacity" Value="0.7" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource PrimaryLightBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryLightBrush}" />
             </Trigger>
             <Trigger Property="IsFocused" Value="True">
-                <Setter Property="Foreground" Value="{StaticResource PrimaryLightBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryLightBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -45,7 +45,7 @@
     <Style x:Key="FlatButtonStyle" TargetType="ButtonBase">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -62,16 +62,16 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource BorderGradientBrush}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource BorderGradientBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{StaticResource TextAccentBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextAccentBrush}" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" Value="{StaticResource BorderGradientBrush}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource BorderGradientBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -85,7 +85,7 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="behaviors:HoverBrightness.IsEnabled" Value="True" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
@@ -93,13 +93,13 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid Background="Transparent">
                         <DockPanel LastChildFill="False" VerticalAlignment="Center">
-                            <Border x:Name="border" Background="{StaticResource ControlBackgroundBrush}"
+                            <Border x:Name="border" Background="{DynamicResource ControlBackgroundBrush}"
                                     Width="40" Height="20" CornerRadius="10" DockPanel.Dock="Left">
                                 <Ellipse x:Name="circle"
                                          Width="16"
                                          Height="16"
                                          HorizontalAlignment="Left"
-                                         Fill="{StaticResource TextPrimaryBrush}" />
+                                         Fill="{DynamicResource TextPrimaryBrush}" />
                             </Border>
                             <TextBlock x:Name="label"
                                        DockPanel.Dock="Right"
@@ -114,11 +114,11 @@
                             <Setter TargetName="label" Property="Visibility" Value="Visible" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryLightBrush}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryLightBrush}" />
                             <Setter TargetName="border" Property="BorderThickness" Value="1" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryBrush}" />
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PrimaryBrush}" />
                             <Setter TargetName="circle" Property="HorizontalAlignment" Value="Right" />
                             <Setter TargetName="circle" Property="Margin" Value="0,0,2,0" />
                         </Trigger>
@@ -132,7 +132,7 @@
     </Style>
 
     <!-- ToggleButton Arrow up/down Style -->
-    <Style x:Key="ToggleButtonArrowStyle" BasedOn="{StaticResource IconButtonStyle}" TargetType="ToggleButton">
+    <Style x:Key="ToggleButtonArrowStyle" BasedOn="{DynamicResource IconButtonStyle}" TargetType="ToggleButton">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -156,7 +156,7 @@
     </Style>
 
     <!-- ToggleButton Icon Style -->
-    <Style x:Key="ToggleButtonIconStyle" BasedOn="{StaticResource IconButtonStyle}" TargetType="ToggleButton">
+    <Style x:Key="ToggleButtonIconStyle" BasedOn="{DynamicResource IconButtonStyle}" TargetType="ToggleButton">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">

@@ -148,7 +148,7 @@
         <Style x:Key="AppTitleStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="32" />
             <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="Margin" Value="0,0,0,8" />
             <Setter Property="Cursor" Value="Hand" />
@@ -158,8 +158,8 @@
             <Setter Property="Height" Value="40" />
             <Setter Property="Padding" Value="16,0" />
             <Setter Property="Margin" Value="0,8,0,0" />
-            <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
-            <Setter Property="BorderBrush" Value="{StaticResource PrimaryLightBrush}" />
+            <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryLightBrush}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Foreground" Value="White" />
             <Setter Property="Cursor" Value="Hand" />
@@ -193,7 +193,7 @@
                             </LinearGradientBrush>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
                 </Trigger>
                 <EventTrigger RoutedEvent="MouseEnter">
                     <BeginStoryboard Storyboard="{StaticResource IconPulseAnimation}" />
@@ -204,16 +204,16 @@
         <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
             <Setter Property="Margin" Value="0,0,0,12" />
         </Style>
 
         <Style x:Key="SupportButtonStyle" TargetType="Button">
             <Setter Property="Height" Value="56" />
             <Setter Property="Margin" Value="0,6" />
-            <Setter Property="Background" Value="{StaticResource CardGradientBrush}" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
-            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+            <Setter Property="Background" Value="{DynamicResource CardGradientBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
@@ -232,7 +232,7 @@
                                            HorizontalAlignment="Right"
                                            VerticalAlignment="Center"
                                            Margin="0,0,16,0"
-                                           Foreground="{StaticResource TextSecondaryBrush}" />
+                                           Foreground="{DynamicResource TextSecondaryBrush}" />
                             </Grid>
                         </Border>
                     </ControlTemplate>
@@ -254,7 +254,7 @@
                             </LinearGradientBrush>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
                 </Trigger>
                 <EventTrigger RoutedEvent="MouseEnter">
                     <BeginStoryboard Storyboard="{StaticResource IconPulseAnimation}" />
@@ -291,7 +291,7 @@
             <Setter Property="Width" Value="64" />
             <Setter Property="Height" Value="64" />
             <Setter Property="CornerRadius" Value="32" />
-            <Setter Property="BorderBrush" Value="{StaticResource PrimaryLightBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryLightBrush}" />
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
@@ -315,7 +315,7 @@
             <Setter Property="TextAlignment" Value="Center" />
             <Setter Property="TextTrimming" Value="CharacterEllipsis" />
             <Setter Property="MaxWidth" Value="90" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="Margin" Value="0,8,0,0" />
@@ -348,12 +348,12 @@
 
                 <!-- Header Section with App Logo and Title -->
                 <Border Grid.Row="0"
-                        Background="{StaticResource CardGradientBrush}"
+                        Background="{DynamicResource CardGradientBrush}"
                         Padding="24,20">
                     <StackPanel HorizontalAlignment="Center">
                         <Border Width="90"
                                 Height="90"
-                                BorderBrush="{StaticResource BorderGradientBrush}"
+                                BorderBrush="{DynamicResource BorderGradientBrush}"
                                 BorderThickness="1"
                                 CornerRadius="45"
                                 Margin="0,0,0,12"
@@ -401,12 +401,12 @@
                             <TextBlock Text="{Binding Version, RelativeSource={RelativeSource AncestorType=views:AboutView}}"
                                        FontSize="14"
                                        Margin="12,0,0,0"
-                                       Foreground="{StaticResource TextSecondaryBrush}"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"
                                        VerticalAlignment="Bottom" />
                         </StackPanel>
 
                         <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[AppDescription]}"
-                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
                                    HorizontalAlignment="Center"
                                    Margin="0,0,0,4" />
 
@@ -473,7 +473,7 @@
 
                         <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[SupportDescription]}"
                                    TextWrapping="Wrap"
-                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
                                    Height="42"
                                    Margin="0,0,0,6" />
 
@@ -535,7 +535,7 @@
                                 <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[Developer]}"
                                            FontWeight="SemiBold"
                                            FontSize="18"
-                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           Foreground="{DynamicResource TextPrimaryBrush}"
                                            Margin="0,0,0,16" />
 
                                 <Grid>
@@ -560,7 +560,7 @@
                                                    FontSize="16"
                                                    Cursor="Hand"
                                                    MouseLeftButtonUp="OpenDeveloperPage"
-                                                   Foreground="{StaticResource TextPrimaryBrush}">
+                                                   Foreground="{DynamicResource TextPrimaryBrush}">
                                             <TextBlock.Effect>
                                                 <DropShadowEffect Color="#9575CD"
                                                                   BlurRadius="4"
@@ -581,7 +581,7 @@
                                                        Cursor="Hand"
                                                        TextDecorations="Underline"
                                                        MouseLeftButtonUp="OpenDeveloperPage"
-                                                       Foreground="{StaticResource AccentBrush}" />
+                                                       Foreground="{DynamicResource AccentBrush}" />
                                         </TextBlock>
                                     </StackPanel>
                                 </Grid>
@@ -596,7 +596,7 @@
 
                         <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[SupportersThanks]}"
                                    TextWrapping="Wrap"
-                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Foreground="{DynamicResource TextSecondaryBrush}"
                                    Height="42"
                                    Margin="0,0,0,12" />
 
@@ -622,10 +622,10 @@
                                                                                FontFamily="Segoe UI Emoji"
                                                                                FontSize="32"
                                                                                HorizontalAlignment="Center"
-                                                                               Foreground="{StaticResource PrimaryLightBrush}"
+                                                                               Foreground="{DynamicResource PrimaryLightBrush}"
                                                                                Margin="0,0,0,12">
                                                                         <TextBlock.Effect>
-                                                                            <DropShadowEffect Color="{StaticResource PrimaryLightColor}"
+                                                                            <DropShadowEffect Color="{DynamicResource PrimaryLightColor}"
                                                                                               BlurRadius="15"
                                                                                               ShadowDepth="0"
                                                                                               Opacity="0.5" />
@@ -635,12 +635,12 @@
                                                                                TextWrapping="Wrap"
                                                                                FontSize="16"
                                                                                FontWeight="Medium"
-                                                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                                                               Foreground="{DynamicResource TextSecondaryBrush}"
                                                                                HorizontalAlignment="Center" />
                                                                     <TextBlock Text="{Binding Source={StaticResource Loc}, Path=[SupportHelps]}"
                                                                                TextWrapping="Wrap"
                                                                                Margin="0,8,0,0"
-                                                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                                                               Foreground="{DynamicResource TextSecondaryBrush}"
                                                                                Opacity="0.8"
                                                                                HorizontalAlignment="Center" />
                                                                 </StackPanel>

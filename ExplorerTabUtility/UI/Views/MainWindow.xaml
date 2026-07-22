@@ -11,11 +11,11 @@
         ResizeMode="CanResizeWithGrip"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        TextBlock.Foreground="{StaticResource TextPrimaryBrush}"
-        TextElement.Foreground="{StaticResource TextPrimaryBrush}">
+        TextBlock.Foreground="{DynamicResource TextPrimaryBrush}"
+        TextElement.Foreground="{DynamicResource TextPrimaryBrush}">
 
-    <Border Background="{StaticResource BackgroundGradientBrush}"
-            BorderBrush="{StaticResource BorderGradientBrush}"
+    <Border Background="{DynamicResource BackgroundGradientBrush}"
+            BorderBrush="{DynamicResource BorderGradientBrush}"
             CornerRadius="5"
             BorderThickness="1">
         <Grid>
@@ -26,7 +26,7 @@
             </Grid.RowDefinitions>
 
             <!-- Title Bar -->
-            <Border x:Name="TitleBar" Grid.Row="0" Background="{StaticResource TitleBarBrush}" CornerRadius="4, 4, 0, 0">
+            <Border x:Name="TitleBar" Grid.Row="0" Background="{DynamicResource TitleBarBrush}" CornerRadius="4, 4, 0, 0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -41,7 +41,7 @@
 
                     <!-- Window Title -->
                     <TextBlock Grid.Column="1" VerticalAlignment="Center" Margin="8,0"
-                               Foreground="{StaticResource TextPrimaryBrush}"
+                               Foreground="{DynamicResource TextPrimaryBrush}"
                                FontWeight="SemiBold"
                                FontSize="14"
                                Text="{Binding Source={StaticResource Loc}, Path=[AppTitle]}" />
@@ -80,8 +80,8 @@
 
                     <!-- Menu Drawer -->
                     <Border Grid.Column="0"
-                            Background="{StaticResource CardGradientBrush}"
-                            BorderBrush="{StaticResource BorderGradientBrush}"
+                            Background="{DynamicResource CardGradientBrush}"
+                            BorderBrush="{DynamicResource BorderGradientBrush}"
                             BorderThickness="0,0,1,0"
                             CornerRadius="0,0,0,4"
                             Width="0">
@@ -123,7 +123,7 @@
                         </DockPanel>
 
                         <Border.Effect>
-                            <DropShadowEffect ShadowDepth="2" BlurRadius="4" Opacity="0.3" Color="{StaticResource ShadowColor}" />
+                            <DropShadowEffect ShadowDepth="2" BlurRadius="4" Opacity="0.3" Color="{DynamicResource ShadowColor}" />
                         </Border.Effect>
 
                         <Border.Style>
@@ -165,7 +165,7 @@
                         <TabControl Style="{StaticResource CustomTabControlStyle}"
                                     SelectedIndex="{Binding SelectedIndex, ElementName=NavigationList}">
                             <TabControl.Effect>
-                                <DropShadowEffect ShadowDepth="1" BlurRadius="3" Opacity="0.2" Color="{StaticResource ShadowColor}" />
+                                <DropShadowEffect ShadowDepth="1" BlurRadius="3" Opacity="0.2" Color="{DynamicResource ShadowColor}" />
                             </TabControl.Effect>
                             <!-- Shortcuts Tab -->
                             <TabItem Header="{Binding Source={StaticResource Loc}, Path=[TabShortcuts]}" Visibility="Collapsed">
@@ -214,13 +214,13 @@
                                               Header="{Binding Source={StaticResource Loc}, Path=[GroupAppSettings]}">
                                         <StackPanel Margin="8">
                                             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                                <TextBlock VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{StaticResource TextSecondaryBrush}"
+                                                <TextBlock VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{DynamicResource TextSecondaryBrush}"
                                                            Text="{Binding Source={StaticResource Loc}, Path=[Theme]}" />
                                                 <ComboBox x:Name="CbTheme" Style="{StaticResource CustomComboBoxStyle}" Width="120"
                                                           SelectedValuePath="Value" DisplayMemberPath="Display"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                                <TextBlock VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{StaticResource TextSecondaryBrush}"
+                                                <TextBlock VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{DynamicResource TextSecondaryBrush}"
                                                            Text="{Binding Source={StaticResource Loc}, Path=[Language]}" />
                                                 <ComboBox x:Name="CbLanguage" Style="{StaticResource CustomComboBoxStyle}" Width="100"
                                                           SelectedValuePath="Value" DisplayMemberPath="Display"/>
@@ -252,21 +252,21 @@
             </Grid>
 
             <!-- Status Bar -->
-            <Border Grid.Row="2" Background="{StaticResource ControlBackgroundBrush}" BorderBrush="{StaticResource BorderBrush}"
+            <Border Grid.Row="2" Background="{DynamicResource ControlBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}"
                     BorderThickness="0,1,0,0" CornerRadius="0,0,4,4">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8,4">
                         <StackPanel Orientation="Horizontal" Margin="8,0">
                             <Ellipse Width="12" Height="12" Margin="0,0,6,0" StrokeThickness="1">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
-                                        <Setter Property="Fill" Value="{StaticResource StatusInactiveBrush}" />
-                                        <Setter Property="Stroke" Value="{StaticResource BorderBrush}" />
+                                        <Setter Property="Fill" Value="{DynamicResource StatusInactiveBrush}" />
+                                        <Setter Property="Stroke" Value="{DynamicResource BorderBrush}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Path=(managers:SettingsManager.IsWindowHookActive)}" Value="True">
-                                                <Setter Property="Fill" Value="{StaticResource StatusActiveBrush}" />
+                                                <Setter Property="Fill" Value="{DynamicResource StatusActiveBrush}" />
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
+                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{DynamicResource StatusActiveColor}" Opacity="0.7" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -274,21 +274,21 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"
+                            <TextBlock Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"
                                        Text="{Binding Source={StaticResource Loc}, Path=[StatusWindowHook]}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="8,0">
                             <Ellipse Width="12" Height="12" Margin="0,0,6,0" StrokeThickness="1">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
-                                        <Setter Property="Fill" Value="{StaticResource StatusInactiveBrush}" />
-                                        <Setter Property="Stroke" Value="{StaticResource BorderBrush}" />
+                                        <Setter Property="Fill" Value="{DynamicResource StatusInactiveBrush}" />
+                                        <Setter Property="Stroke" Value="{DynamicResource BorderBrush}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Path=(managers:SettingsManager.ReuseTabs)}" Value="True">
-                                                <Setter Property="Fill" Value="{StaticResource StatusActiveBrush}" />
+                                                <Setter Property="Fill" Value="{DynamicResource StatusActiveBrush}" />
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
+                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{DynamicResource StatusActiveColor}" Opacity="0.7" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -296,21 +296,21 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"
+                            <TextBlock Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"
                                        Text="{Binding Source={StaticResource Loc}, Path=[StatusReuseTabs]}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="8,0">
                             <Ellipse Width="12" Height="12" Margin="0,0,6,0" StrokeThickness="1">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
-                                        <Setter Property="Fill" Value="{StaticResource StatusInactiveBrush}" />
-                                        <Setter Property="Stroke" Value="{StaticResource BorderBrush}" />
+                                        <Setter Property="Fill" Value="{DynamicResource StatusInactiveBrush}" />
+                                        <Setter Property="Stroke" Value="{DynamicResource BorderBrush}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Path=(managers:SettingsManager.IsKeyboardHookActive)}" Value="True">
-                                                <Setter Property="Fill" Value="{StaticResource StatusActiveBrush}" />
+                                                <Setter Property="Fill" Value="{DynamicResource StatusActiveBrush}" />
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
+                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{DynamicResource StatusActiveColor}" Opacity="0.7" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -318,21 +318,21 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"
+                            <TextBlock Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"
                                        Text="{Binding Source={StaticResource Loc}, Path=[StatusKeyboardHook]}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="8,0">
                             <Ellipse Width="12" Height="12" Margin="0,0,6,0" StrokeThickness="1">
                                 <Ellipse.Style>
                                     <Style TargetType="Ellipse">
-                                        <Setter Property="Fill" Value="{StaticResource StatusInactiveBrush}" />
-                                        <Setter Property="Stroke" Value="{StaticResource BorderBrush}" />
+                                        <Setter Property="Fill" Value="{DynamicResource StatusInactiveBrush}" />
+                                        <Setter Property="Stroke" Value="{DynamicResource BorderBrush}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Path=(managers:SettingsManager.IsMouseHookActive)}" Value="True">
-                                                <Setter Property="Fill" Value="{StaticResource StatusActiveBrush}" />
+                                                <Setter Property="Fill" Value="{DynamicResource StatusActiveBrush}" />
                                                 <Setter Property="Effect">
                                                     <Setter.Value>
-                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{StaticResource StatusActiveColor}" Opacity="0.7" />
+                                                        <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{DynamicResource StatusActiveColor}" Opacity="0.7" />
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
@@ -340,7 +340,7 @@
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
-                            <TextBlock Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"
+                            <TextBlock Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"
                                        Text="{Binding Source={StaticResource Loc}, Path=[StatusMouseHook]}" />
                         </StackPanel>
                     </StackPanel>

@@ -67,16 +67,16 @@
                                         <ControlTemplate TargetType="Thumb">
                                             <Rectangle x:Name="ThumbRectangle"
                                                        Opacity="0.8"
-                                                       Fill="{StaticResource BorderBrush}"
+                                                       Fill="{DynamicResource BorderBrush}"
                                                        RadiusX="2" RadiusY="2"
                                                        Margin="4,0,4,8" />
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="true">
                                                     <Setter TargetName="ThumbRectangle" Property="Fill"
-                                                            Value="{StaticResource ControlHoverBrush}" />
+                                                            Value="{DynamicResource ControlHoverBrush}" />
                                                 </Trigger>
                                                 <Trigger Property="IsDragging" Value="true">
-                                                    <Setter TargetName="ThumbRectangle" Property="Fill" Value="{StaticResource BorderBrush}" />
+                                                    <Setter TargetName="ThumbRectangle" Property="Fill" Value="{DynamicResource BorderBrush}" />
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>

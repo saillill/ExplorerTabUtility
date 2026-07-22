@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:ExplorerTabUtility.UI.Views.Controls"
              mc:Ignorable="d"
-             TextBlock.Foreground="{StaticResource TextPrimaryBrush}"
-             TextElement.Foreground="{StaticResource TextPrimaryBrush}"
+             TextBlock.Foreground="{DynamicResource TextPrimaryBrush}"
+             TextElement.Foreground="{DynamicResource TextPrimaryBrush}"
              d:DesignHeight="125" d:DesignWidth="800">
 
     <UserControl.Resources>
@@ -79,7 +79,7 @@
                         <Style TargetType="Button" BasedOn="{StaticResource IconButtonStyle}">
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

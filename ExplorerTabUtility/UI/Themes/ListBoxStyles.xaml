@@ -3,7 +3,7 @@
 
     <!-- Navigation ListBoxItem Style -->
     <Style x:Key="NavigationListBoxItemStyle" TargetType="ListBoxItem">
-        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="12, 10" />
         <Setter Property="Margin" Value="4,2" />
@@ -21,11 +21,11 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource BorderGradientBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource BorderGradientBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -41,6 +41,6 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource NavigationListBoxItemStyle}" />
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource NavigationListBoxItemStyle}" />
     </Style>
 </ResourceDictionary>

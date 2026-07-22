@@ -9,25 +9,25 @@
 
     <!-- Default style for all controls -->
     <Style TargetType="{x:Type Control}">
-        <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
-        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
-        <Setter Property="FontWeight" Value="{StaticResource DefaultFontWeight}" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource DefaultFontWeight}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
         <Setter Property="TextOptions.TextHintingMode" Value="Auto" />
 
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!-- Default style for TextBlock -->
     <Style TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
-        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
-        <Setter Property="FontWeight" Value="{StaticResource DefaultFontWeight}" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource DefaultFontWeight}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
         <Setter Property="TextOptions.TextHintingMode" Value="Auto" />
@@ -35,35 +35,35 @@
 
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!-- Default style for any element -->
     <Style TargetType="{x:Type TextElement}">
-        <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
-        <Setter Property="FontSize" Value="{StaticResource DefaultFontSize}" />
-        <Setter Property="FontWeight" Value="{StaticResource DefaultFontWeight}" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource DefaultFontWeight}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
         <Setter Property="TextOptions.TextHintingMode" Value="Auto" />
 
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
     <!-- Default style for Tooltip -->
     <Style TargetType="{x:Type ToolTip}">
-        <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Background" Value="{StaticResource DropdownBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource BorderGradientBrush}" />
+        <Setter Property="Background" Value="{DynamicResource DropdownBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderGradientBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="10,6" />
         <Setter Property="HasDropShadow" Value="True" />
@@ -80,7 +80,7 @@
                             Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                         <Border.Effect>
-                            <DropShadowEffect Color="{StaticResource ShadowColor}"
+                            <DropShadowEffect Color="{DynamicResource ShadowColor}"
                                               BlurRadius="10"
                                               ShadowDepth="3"
                                               Opacity="0.3"
@@ -100,8 +100,8 @@
 
     <!-- System Tray Context Menu Style -->
     <Style TargetType="ContextMenu">
-        <Setter Property="Background" Value="{StaticResource DropdownBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource BorderGradientBrush}" />
+        <Setter Property="Background" Value="{DynamicResource DropdownBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderGradientBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="Template">
@@ -112,7 +112,7 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <Border.Effect>
-                            <DropShadowEffect Color="{StaticResource ShadowColor}" Direction="270" ShadowDepth="3" BlurRadius="5" Opacity="0.3" />
+                            <DropShadowEffect Color="{DynamicResource ShadowColor}" Direction="270" ShadowDepth="3" BlurRadius="5" Opacity="0.3" />
                         </Border.Effect>
                         <ItemsPresenter />
                     </Border>
@@ -123,7 +123,7 @@
         <Style.Resources>
             <!-- System Tray Separator Style -->
             <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="Separator">
-                <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+                <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
                 <Setter Property="Opacity" Value="0.2" />
                 <Setter Property="Height" Value="1" />
                 <Setter Property="Margin" Value="5,3" />
@@ -131,7 +131,7 @@
 
             <!-- System Tray Menu Item Style -->
             <Style TargetType="MenuItem">
-                <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="Padding" Value="10,0,10,5" />
                 <Setter Property="FontSize" Value="13" />
@@ -157,14 +157,14 @@
                                                       ContentSource="Icon"
                                                       VerticalAlignment="Center"
                                                       HorizontalAlignment="Center"
-                                                      TextBlock.Foreground="{StaticResource PrimaryLightBrush}"
+                                                      TextBlock.Foreground="{DynamicResource PrimaryLightBrush}"
                                                       Margin="8,0,0,0" />
 
                                     <!-- Checkmark (shown when IsChecked=True) -->
                                     <Path x:Name="Checkmark"
                                           Grid.Column="0"
                                           Data="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"
-                                          Fill="{StaticResource PrimaryBrush}"
+                                          Fill="{DynamicResource PrimaryBrush}"
                                           Stretch="Uniform"
                                           Width="16"
                                           Height="16"
@@ -196,12 +196,12 @@
                                            AllowsTransparency="True"
                                            Focusable="False">
                                         <Border x:Name="SubMenuBorder"
-                                                Background="{StaticResource DropdownBackgroundBrush}"
-                                                BorderBrush="{StaticResource BorderGradientBrush}"
+                                                Background="{DynamicResource DropdownBackgroundBrush}"
+                                                BorderBrush="{DynamicResource BorderGradientBrush}"
                                                 BorderThickness="1"
                                                 Padding="2">
                                             <Border.Effect>
-                                                <DropShadowEffect Color="{StaticResource ShadowColor}" Direction="270" ShadowDepth="3"
+                                                <DropShadowEffect Color="{DynamicResource ShadowColor}" Direction="270" ShadowDepth="3"
                                                                   BlurRadius="5" Opacity="0.3" />
                                             </Border.Effect>
                                             <ScrollViewer CanContentScroll="True">
@@ -220,19 +220,19 @@
 
                                 <!-- Mouse Over Trigger -->
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ControlHoverBrush}" />
-                                    <Setter Property="Foreground" Value="{StaticResource TextAccentBrush}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource TextAccentBrush}" />
                                 </Trigger>
 
                                 <!-- Disabled Trigger -->
                                 <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Foreground" Value="{StaticResource TextTertiaryBrush}" />
-                                    <Setter TargetName="Checkmark" Property="Fill" Value="{StaticResource TextTertiaryBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource TextTertiaryBrush}" />
+                                    <Setter TargetName="Checkmark" Property="Fill" Value="{DynamicResource TextTertiaryBrush}" />
                                 </Trigger>
 
                                 <!-- Selected Trigger -->
                                 <Trigger Property="IsHighlighted" Value="True">
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource ControlHoverBrush}" />
+                                    <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlHoverBrush}" />
                                 </Trigger>
 
                                 <!-- When checked, show the checkmark and hide the icon -->
@@ -247,7 +247,7 @@
                                         <Condition Property="IsChecked" Value="True" />
                                         <Condition Property="IsEnabled" Value="True" />
                                     </MultiTrigger.Conditions>
-                                    <Setter Property="Foreground" Value="{StaticResource TextAccentBrush}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource TextAccentBrush}" />
                                 </MultiTrigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>

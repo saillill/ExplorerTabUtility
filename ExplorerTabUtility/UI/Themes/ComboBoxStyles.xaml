@@ -8,7 +8,7 @@
 
     <!-- ComboBox Item Style -->
     <Style x:Key="CustomComboBoxItemStyle" TargetType="ComboBoxItem">
-        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="8,4" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -21,27 +21,27 @@
                             BorderThickness="1"
                             CornerRadius="2"
                             Padding="{TemplateBinding Padding}">
-                        <ContentPresenter TextElement.Foreground="{StaticResource TextPrimaryBrush}"
-                                          ToolTip="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
+                        <ContentPresenter TextElement.Foreground="{DynamicResource TextPrimaryBrush}"
+                                          ToolTip="{Binding Converter={DynamicResource EnumDescriptionConverter}}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ControlHoverBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlHoverBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PrimaryBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryBrush}" />
                         </Trigger>
                         <Trigger Property="IsHighlighted" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ControlHoverBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource ControlHoverBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsHighlighted" Value="True" />
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PrimaryLightBrush}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryLightBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -73,10 +73,10 @@
                                        Content="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
                                        ContentTemplate="{Binding ItemTemplate, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
                                        ContentStringFormat="{Binding DisplayMemberPath, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
-                                       TextElement.Foreground="{StaticResource TextPrimaryBrush}" />
+                                       TextElement.Foreground="{DynamicResource TextPrimaryBrush}" />
                             <Path x:Name="Arrow"
                                   Grid.Column="1"
-                                  Fill="{StaticResource TextPrimaryBrush}"
+                                  Fill="{DynamicResource TextPrimaryBrush}"
                                   Data="M0,0 L10,0 L5,5 Z"
                                   Width="10" Height="5"
                                   Stretch="Fill"
@@ -93,7 +93,7 @@
                             <Setter TargetName="Arrow" Property="Data" Value="M0,5 L10,5 L5,0 Z" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -103,9 +103,9 @@
 
     <!-- Main ComboBox Style -->
     <Style x:Key="CustomComboBoxStyle" TargetType="ComboBox">
-        <Setter Property="Foreground" Value="{StaticResource TextPrimaryBrush}" />
-        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}" />
-        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
         <Setter Property="BorderThickness" Value="0,0,0,1" />
         <Setter Property="Padding" Value="8,4" />
         <Setter Property="Cursor" Value="Hand" />
@@ -124,7 +124,7 @@
                                       Padding="{TemplateBinding Padding}"
                                       IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                       Focusable="False"
-                                      Style="{StaticResource ComboBoxToggleButtonStyle}" />
+                                      Style="{DynamicResource ComboBoxToggleButtonStyle}" />
                         <Popup x:Name="Popup"
                                Placement="Bottom"
                                IsOpen="{TemplateBinding IsDropDownOpen}"
@@ -136,8 +136,8 @@
                                   MinWidth="{TemplateBinding ActualWidth}"
                                   MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                 <Border x:Name="DropDownBorder"
-                                        Background="{StaticResource DropdownBackgroundBrush}"
-                                        BorderBrush="{StaticResource BorderBrush}"
+                                        Background="{DynamicResource DropdownBackgroundBrush}"
+                                        BorderBrush="{DynamicResource BorderBrush}"
                                         BorderThickness="1"
                                         CornerRadius="0,0,2,2" />
                                 <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
@@ -154,17 +154,17 @@
                             <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="True">
-                            <Setter TargetName="ToggleButton" Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                            <Setter TargetName="ToggleButton" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
-                            <Setter TargetName="ToggleButton" Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                            <Setter TargetName="ToggleButton" Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Resources>
-            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource CustomComboBoxItemStyle}" />
+            <Style TargetType="ComboBoxItem" BasedOn="{DynamicResource CustomComboBoxItemStyle}" />
         </Style.Resources>
     </Style>
 

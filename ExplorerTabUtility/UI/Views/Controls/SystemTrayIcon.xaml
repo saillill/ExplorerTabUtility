@@ -96,7 +96,7 @@
                           Header="{Binding Source={StaticResource Loc}, Path=[Exit]}"
                           ToolTip="{Binding Source={StaticResource Loc}, Path=[Exit]}">
                     <MenuItem.Icon>
-                        <TextBlock Text="&#xE7E8;" FontSize="14" Foreground="{StaticResource DangerBrush}" />
+                        <TextBlock Text="&#xE7E8;" FontSize="14" Foreground="{DynamicResource DangerBrush}" />
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>

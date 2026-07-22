@@ -1,5 +1,5 @@
 using System;
-using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using Microsoft.Win32;
 
@@ -11,18 +11,17 @@ public static class ThemeManager
 {
     private const string ThemeKey = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
     private const string AppsUseLightTheme = "AppsUseLightTheme";
+    private const string ColorsDarkPath = "pack://application:,,,/ExplorerTabUtility;component/UI/Themes/Colors.Dark.xaml";
+    private const string ColorsLightPath = "pack://application:,,,/ExplorerTabUtility;component/UI/Themes/Colors.Light.xaml";
 
     public static AppTheme CurrentTheme
     {
         get => (AppTheme)(SettingsManager.ThemeMode);
         set
         {
-            if ((int)value != SettingsManager.ThemeMode)
-            {
-                SettingsManager.ThemeMode = (int)value;
-                // Need restart: StaticResource bindings don't update dynamically
-                Restart();
-            }
+            if ((int)value == SettingsManager.ThemeMode) return;
+            SettingsManager.ThemeMode = (int)value;
+            ApplyTheme();
         }
     }
 
@@ -31,11 +30,35 @@ public static class ThemeManager
         SystemEvents.UserPreferenceChanged += (s, e) =>
         {
             if (e.Category == UserPreferenceCategory.General && CurrentTheme == AppTheme.System)
-                Restart();
+                ApplyTheme();
         };
     }
 
+    public static void ApplyTheme()
+    {
+        var dictionaries = Application.Current.Resources.MergedDictionaries;
+        var colorsUri = GetColorsUri();
+
+        // Remove old Colors dictionary (Dark or Light)
+        var oldDark = dictionaries.FirstOrDefault(d =>
+            d.Source?.OriginalString == ColorsDarkPath);
+        var oldLight = dictionaries.FirstOrDefault(d =>
+            d.Source?.OriginalString == ColorsLightPath);
+
+        if (oldDark != null) dictionaries.Remove(oldDark);
+        if (oldLight != null) dictionaries.Remove(oldLight);
+
+        // Add new Colors dictionary — DynamicResource bindings auto-update
+        dictionaries.Add(new ResourceDictionary { Source = new Uri(colorsUri) });
+    }
+
     public static string GetColorsFile()
+    {
+        var uri = GetColorsUri();
+        return uri == ColorsDarkPath ? "Colors.Dark.xaml" : "Colors.Light.xaml";
+    }
+
+    private static string GetColorsUri()
     {
         bool useDark = CurrentTheme switch
         {
@@ -43,7 +66,7 @@ public static class ThemeManager
             AppTheme.Dark => true,
             _ => !IsSystemLightTheme()
         };
-        return useDark ? "Colors.Dark.xaml" : "Colors.Light.xaml";
+        return useDark ? ColorsDarkPath : ColorsLightPath;
     }
 
     private static bool IsSystemLightTheme()
@@ -54,23 +77,5 @@ public static class ThemeManager
             return key?.GetValue(AppsUseLightTheme) is not 0;
         }
         catch { return true; }
-    }
-
-    public static void Restart()
-    {
-        SettingsManager.ForceSave();
-        var exe = Process.GetCurrentProcess().MainModule?.FileName;
-        if (exe != null)
-        {
-            try
-            {
-                Process.Start(new ProcessStartInfo(exe) { UseShellExecute = true });
-                Application.Current.Shutdown();
-            }
-            catch
-            {
-                // Failed to restart — keep running with current theme until next manual restart
-            }
-        }
     }
 }
