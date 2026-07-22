@@ -21,7 +21,14 @@ public class LocalizationService : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
     public static event Action? LanguageChanged;
 
-    public string this[string key] => _resourceManager.GetString(key, CultureInfo.CurrentUICulture) ?? key;
+    public string this[string key]
+    {
+        get
+        {
+            try { return _resourceManager.GetString(key, CultureInfo.CurrentUICulture) ?? key; }
+            catch { return key; }
+        }
+    }
 
     public static string Get(string key) => Instance[key];
 
