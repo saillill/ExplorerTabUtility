@@ -14,6 +14,10 @@ on:
 
 env:
   PROJECT_NAME: ExplorerTabUtility
+  # SignPath free code signing — register at https://signpath.io
+  SIGNPATH_ORG_ID: c35b3bd9-3451-4e24-b4e0-332e901290bf
+  SIGNPATH_PROJECT_SLUG: ExplorerTabUtility
+  SIGNPATH_POLICY_SLUG: release-signing
   VERSION: ${{ github.event_name == 'push' && github.ref_name || inputs.version }}
 
 jobs:
@@ -72,9 +76,11 @@ jobs:
           name: ${{ steps.zip_artifacts.outputs.zipName }}
           path: ${{ steps.zip_artifacts.outputs.zipName }}
 
-  collect-artifacts:
+  sign-artifacts:
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      artifact-name: ${{ steps.artifact-name.outputs.name }}
     steps:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
@@ -82,14 +88,66 @@ jobs:
           path: ./artifacts
           merge-multiple: true
 
-      - name: Upload artifacts (unsigned)
+      - name: Check if signing is configured
+        id: check-signing
+        run: |
+          if [ -n "${{ secrets.SIGNPATH_API_TOKEN }}" ]; then
+            echo "signing=true" >> $GITHUB_OUTPUT
+          else
+            echo "signing=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload unsigned bundle (skip signing)
+        if: steps.check-signing.outputs.signing == 'false'
+        id: upload-unsigned
         uses: actions/upload-artifact@v4
         with:
           name: release-artifacts
           path: ./artifacts/*.zip
 
+      - name: Set artifact name (unsigned)
+        if: steps.check-signing.outputs.signing == 'false'
+        id: artifact-name-unsigned
+        run: echo "name=release-artifacts" >> $GITHUB_OUTPUT
+
+      - name: Upload signing bundle to GitHub
+        if: steps.check-signing.outputs.signing == 'true'
+        id: upload-signing-bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-bundle
+          path: ./artifacts/*.zip
+
+      - name: Submit bundle for signing (SignPath)
+        if: steps.check-signing.outputs.signing == 'true'
+        id: submit-signing
+        uses: signpath/github-action-submit-signing-request@v1.1
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ env.SIGNPATH_ORG_ID }}
+          project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ env.SIGNPATH_POLICY_SLUG }}
+          artifact-configuration-slug: multi-zip
+          github-artifact-id: ${{ steps.upload-signing-bundle.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: './signed-output'
+          parameters: |
+            version: "${{ env.VERSION }}"
+
+      - name: Upload signed artifacts
+        if: steps.check-signing.outputs.signing == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-artifacts
+          path: ./signed-output/*.zip
+
+      - name: Set artifact name (signed)
+        if: steps.check-signing.outputs.signing == 'true'
+        id: artifact-name-signed
+        run: echo "name=release-artifacts" >> $GITHUB_OUTPUT
+
   build-installer:
-    needs: collect-artifacts
+    needs: sign-artifacts
     runs-on: windows-latest
     steps:
       - name: Checkout code
@@ -128,7 +186,7 @@ jobs:
           path: artifacts/*.exe
 
   create-release:
-    needs: [ collect-artifacts, build-installer ]
+    needs: [ sign-artifacts, build-installer ]
     runs-on: windows-latest
     permissions:
       contents: write
