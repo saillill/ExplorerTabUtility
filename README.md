@@ -133,6 +133,35 @@
 - 可靠的窗口状态管理
 </details>
 
+## 📝 更新日志 (v2.5.1)
+
+> **基于 [w4po/ExplorerTabUtility v2.5.0](https://github.com/w4po/ExplorerTabUtility) 的复刻版本**
+
+### 🆕 新增功能
+- 🌙 **深色/浅色主题**：支持深色、浅色、跟随系统三种主题模式，实时切换无需重启
+- 🌐 **中英双语界面**：完整的中英文切换支持，自动检测系统语言
+- 🇨🇳 **全面中文化**：菜单、设置、提示等全部界面元素中文化
+- 🔤 **微软雅黑字体**：优化中文显示效果
+
+### 🔧 改进优化
+- 💾 **防抖保存 + 原子写入**：设置文件保存更可靠，自动备份防损坏
+- 🛠️ **COM 互操作重构**：改用手动 COM 类型定义，替代 COMReference，更可控
+- 📝 **改进的翻译**：快捷键操作（HotKeyAction）和作用域（HotkeyScope）的中文描述
+- 🧹 **代码清理**：移除重复 using 指令，清理冗余代码
+- 🔕 **移除自动更新**：简化应用架构
+
+### 🐛 Bug 修复
+- 🚀 **修复启动崩溃**：`Style.BasedOn` 上非法使用 `DynamicResource` 导致 XamlParseException
+- 💥 **修复点击偏好设置闪退**：`Binding.Converter` 上非法使用 `DynamicResource` 导致 NullReferenceException
+- 📦 **资源嵌入修复**：正确配置 .resx 资源文件的 SDK 自动嵌入
+
+### ⚠️ 与原项目的差异
+- 仅支持 .NET 9.0（不再支持 .NET Framework 4.8.1）
+- COM 互操作采用手动定义（不使用 MSBuild COMReference）
+- 移除了自动更新功能
+
+---
+
 ## 🚀 快速开始
 
 1. 从 [Releases](https://github.com/saillill/ExplorerTabUtility/releases) 页面下载最新版本
