@@ -15,7 +15,7 @@
         <Copyright>Copyright © 2025 saillill</Copyright>
         <PackageProjectUrl>https://github.com/saillill/ExplorerTabUtility</PackageProjectUrl>
         <RepositoryUrl>https://github.com/saillill/ExplorerTabUtility</RepositoryUrl>
-        <SatelliteResourceLanguages>zh-CN</SatelliteResourceLanguages>
+        <SatelliteResourceLanguages>none</SatelliteResourceLanguages>
         <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
