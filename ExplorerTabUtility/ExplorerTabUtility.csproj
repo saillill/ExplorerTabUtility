@@ -28,15 +28,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Properties\Resources.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Properties\Resources.zh-CN.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-        </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
         <Resource Include="Icon.ico"/>
     </ItemGroup>
 
