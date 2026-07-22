@@ -132,7 +132,7 @@
     </Style>
 
     <!-- ToggleButton Arrow up/down Style -->
-    <Style x:Key="ToggleButtonArrowStyle" BasedOn="{DynamicResource IconButtonStyle}" TargetType="ToggleButton">
+    <Style x:Key="ToggleButtonArrowStyle" BasedOn="{StaticResource IconButtonStyle}" TargetType="ToggleButton">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -156,7 +156,7 @@
     </Style>
 
     <!-- ToggleButton Icon Style -->
-    <Style x:Key="ToggleButtonIconStyle" BasedOn="{DynamicResource IconButtonStyle}" TargetType="ToggleButton">
+    <Style x:Key="ToggleButtonIconStyle" BasedOn="{StaticResource IconButtonStyle}" TargetType="ToggleButton">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">

@@ -164,7 +164,7 @@
             </Setter.Value>
         </Setter>
         <Style.Resources>
-            <Style TargetType="ComboBoxItem" BasedOn="{DynamicResource CustomComboBoxItemStyle}" />
+            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource CustomComboBoxItemStyle}" />
         </Style.Resources>
     </Style>
 

@@ -120,8 +120,8 @@
     <!-- Reusable TextBox Context Menu Resource -->
     <ContextMenu x:Key="TextBoxCustomContextMenu" Style="{DynamicResource TextBoxContextMenuStyle}">
         <ContextMenu.Resources>
-            <Style TargetType="MenuItem" BasedOn="{DynamicResource TextBoxContextMenuItemStyle}" />
-            <Style TargetType="Separator" BasedOn="{DynamicResource TextBoxContextMenuSeparatorStyle}" />
+            <Style TargetType="MenuItem" BasedOn="{StaticResource TextBoxContextMenuItemStyle}" />
+            <Style TargetType="Separator" BasedOn="{StaticResource TextBoxContextMenuSeparatorStyle}" />
         </ContextMenu.Resources>
 
         <MenuItem Command="ApplicationCommands.Cut">

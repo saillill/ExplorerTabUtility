@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Runtime.InteropServices;
 using ExplorerTabUtility.Helpers;
-using ExplorerTabUtility.Interop;
 using ExplorerTabUtility.Managers;
 using ExplorerTabUtility.Models;
 using ExplorerTabUtility.WinAPI;
